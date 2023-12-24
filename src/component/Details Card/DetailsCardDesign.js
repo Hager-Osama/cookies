@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button';
 
-const DetailsCardDesign = ({ detailsImage, headline, spanText, description, isEvenCard, }) => {
+const DetailsCardDesign = ({ detailsImage, headline, spanText, description, isEvenCard}) => {
     const detailsDev = <div className='Detailstext'>
         <h2> {headline}<span> {spanText}</span> </h2>
         <p>{description}</p>

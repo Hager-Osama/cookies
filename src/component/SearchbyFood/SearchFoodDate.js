@@ -2,35 +2,6 @@
 import React, { useEffect, useState } from 'react'
 import SearchFoodDesgin from './SearchFoodDesgin'
 import axios from 'axios';
-
-
-
-// Food model
-class Food {
-    constructor(image, _id, name, createdAt, updatedAt, __v) {
-        this.image = image;
-        this._id = _id;
-        this.name = name;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.__v = __v;
-    }
-}
-  
-  // API Response model
-  class GetFoodModel {
-    constructor(success, result) {
-        this.success = success;
-        this.result = result.map(
-            ({ image, _id, name, createdAt, updatedAt, __v }) => new Food(image, _id, name, createdAt, updatedAt, __v)
-        );
-    }
-}
-  
-
-
-
-
 const SearchFoodDate = () => {
 
     const [data,setData]=useState([]);
@@ -44,12 +15,8 @@ const SearchFoodDate = () => {
 
             //     'Access-Control-Allow-Origin': '*',
             //     'Content-Type': 'application/json',             
-            //   }
-            
-            // }
+            //  }}  
             )
-
-            console.log(`hellooo ${response.data.result}` )
             setData(response.data.result)
          } catch (error) {
             console.log('errrrrorrrr', error)

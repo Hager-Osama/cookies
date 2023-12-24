@@ -9,6 +9,7 @@ const ReactCardDate = () => {
 
   const [apiData, setApiData] = useState([]);
   const [loading, setLoading] = useState(true)
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,7 +26,6 @@ const ReactCardDate = () => {
   if (loading){
     return(<h2>loading.........</h2>)
   }
-  
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.

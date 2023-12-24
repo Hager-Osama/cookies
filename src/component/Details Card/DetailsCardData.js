@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import DetailsCardDesign from './DetailsCardDesign'
 import axios from 'axios';
+import { Button } from 'react-bootstrap';
 
 
 const DetailsCardData = () => {
@@ -19,7 +20,27 @@ const DetailsCardData = () => {
    }
   };
   fetchData();
-  })
+  },[])
+
+ /* const handlePostData = async () => {
+    try {
+      const postData = 
+        {
+          title: "fbbddb",
+          description: "agggggggggggg",
+          image: {
+            id: "resturant/bestFood/sj90yg9woflgmvvmqqp7",
+            url: "https://res.cloudinary.com/dz5dpvxg7/image/upload/v1703408601/resturant/bestFood/sj90yg9woflgmvvmqqp7.jpg",
+          },
+        };
+      
+      const response = await axios.post("https://restaurant-project-drab.vercel.app/bestFood/createBestFood", postData);
+      
+    } catch (error) {
+      console.error('Error posting data:', error);
+    }
+  };*/
+
   if(loading){
     return(<h3>loading.........</h3>)
   }
@@ -61,6 +82,7 @@ const DetailsCardData = () => {
       
       {cards}
       
+
     </div>
   )
 }
