@@ -83,7 +83,7 @@ const SecondFooter = () => {
     <div className='container '>
         <div className='d-flex justify-content-between ' style={{color:'white'}}>
             <h5>All rights Reserved  &copy; Your Company, 2021</h5>
-            <h5>Made with <span> &hearts;</span>	 by HagerEl-sha3er</h5>
+            <h5>Made with <span> &hearts;</span>	 by Hager El-sha3er</h5>
         </div>
         </div>
 

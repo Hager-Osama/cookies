@@ -10,13 +10,13 @@ const Header1 = () => {
           <h1>Are you starving?</h1>
           <p>Within a few clicks, find meals that are accessible near you</p>
             <div className='one'>
-                <span><i class="fa-solid fa-motorcycle"></i>&nbsp;  Delivery </span>&nbsp;
-                <span><i class="fa-solid fa-bag-shopping"></i>&nbsp;  Pickup </span>
+                <span><i className="fa-solid fa-motorcycle"></i>&nbsp;  Delivery </span>&nbsp;
+                <span><i className="fa-solid fa-bag-shopping"></i>&nbsp;  Pickup </span>
             </div>
             <div className='two '>
-                <span><i class="fa-sharp fa-solid fa-location-dot"></i></span>
+                <span><i className="fa-sharp fa-solid fa-location-dot"></i></span>
                 <input type="text" placeholder="Enter Your Address" />
-                <button type='button' className='btn'> <i class="fa-sharp fa-solid fa-magnifying-glass"></i> find food</button>
+                <button type='button' className='btn'> <i className="fa-sharp fa-solid fa-magnifying-glass"></i> find food</button>
             </div>   
         </div>
         

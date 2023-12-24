@@ -1,9 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import ReactCardDesgin from './ReactCardDesgin.js';
 import { Container } from 'react-bootstrap';
+
 const ReactCardDate = () => { 
+
+  const [apiData, setApiData] = useState([]);
+  const [loading, setLoading] = useState(true)
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://restaurant-project-drab.vercel.app/PopularItems/getallPopularItems');
+        setApiData(response.data.result);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []); // Empty dependency array ensures the effect runs once when the component mounts
+  if (loading){
+    return(<h2>loading.........</h2>)
+  }
+  
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -23,7 +45,7 @@ const ReactCardDate = () => {
       items: 1
     }
   };
-  const data=[
+ /*const data=[
     {image :require('../images/Frame40.png'),
      title:`Cheese Burger`,
      location:`Burger Arena`,
@@ -50,13 +72,16 @@ const ReactCardDate = () => {
     location:`Foody man`,
     price:`$2.79`,
     },
-  ]
-  const card= data.map((d)=>(
+  ]*/
+ 
+  const card= apiData.map((item)=>(
   <ReactCardDesgin
-  image={d.image}
-  title={d.title}
-  location={d.location}
-  price={d.price}
+  key={item._id}
+  image={item.image.url}
+  title={item.title}
+  location={item.place}
+  price={`$${item.price.toFixed(2)}`} 
+  // is used to format the price value as a string with two decimal places and prepended with a dollar sign ('$').
   /> )
   )
   return (
@@ -70,4 +95,4 @@ const ReactCardDate = () => {
   )
 }
 
-export default ReactCardDate
+export default ReactCardDate;

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import Card from 'react-bootstrap/Card';
 const FlashDeals = ({imageUrl,present,Title,DaysRemaining}) => {
   return (
@@ -17,4 +17,4 @@ const FlashDeals = ({imageUrl,present,Title,DaysRemaining}) => {
   )
 }
 
-export default FlashDeals
+export default FlashDeals;

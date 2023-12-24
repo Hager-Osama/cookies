@@ -9,7 +9,7 @@ const DetailsCardDesign = ({ detailsImage, headline, spanText, description, isEv
             width: "100%", color: "white",
             boxShadow: '0px 20px 40px 0px rgba(250, 99, 35, 0.24), 0px 5px 10px 0px rgba(253, 114, 92, 0.22)'
         }}>
-            Proceed to order <i class="fa-solid fa-chevron-right"></i></Button>
+            Proceed to order <i className="fa-solid fa-chevron-right"></i></Button>
     </div>
 
     const imgDev = <div className='DetailsImage'>
@@ -18,14 +18,9 @@ const DetailsCardDesign = ({ detailsImage, headline, spanText, description, isEv
 
     return (
         <section className='Details'>
-            <div className={`d-flex cardEdit ${isEvenCard ? 'reverseOrder' : ''}`}>
-               {isEvenCard ?
-                detailsDev
-                : imgDev
-              }{
-                isEvenCard ?
-                imgDev
-                : detailsDev} 
+            <div className="d-flex cardEdit">
+               {isEvenCard ? detailsDev: imgDev }
+               {isEvenCard ? imgDev: detailsDev} 
             </div>
         </section >
     )

@@ -1,9 +1,28 @@
-import React from 'react'
-import FeaturedDesign from './FeaturedDesign'
-import { Button } from 'react-bootstrap'
+import React, { useEffect, useState } from 'react';
+import FeaturedDesign from './FeaturedDesign';
+import { Button } from 'react-bootstrap';
+import axios from 'axios';
 
 const FeaturedData = () => {
-    const data=[
+  const [data, setData]= useState([]);
+  const [loading, setLoading]=useState(true);
+  useEffect(()=>{
+    const fetchData= async ()=>{
+     try {
+      const response=await axios.get("https://restaurant-project-drab.vercel.app/restaurant/getRestaurant");
+      setData(response.data.result);
+     } catch (error) {
+      console.log('Error fetching data:', error);
+     } finally{
+      setLoading(false);
+     }
+    };
+    fetchData();
+  },[]);
+  if(loading){
+    return(<p>loading.........</p>)
+  }
+    /*const data=[
         {imageUrl :require('../../images/1.png'),
         present:`20`,
         iconimage:require('../../images/Foodworld.png'),
@@ -60,15 +79,16 @@ const FeaturedData = () => {
         Rate:`50`,
         opens:`Open Now`
         },
-        ]
+        ]*/
         const card =data.map((d)=>(
          <FeaturedDesign
-            imageUrl={d.imageUrl}
-            present={d.present}
-            iconimage={d.iconimage}
-            Title={d.Title}
-            Rate={d.Rate}
-            opens={d.opens}
+            key={d._id}
+            imageUrl={d.image.url}
+            present={d.offer}
+            iconimage={d.logo.url}
+            Title={d.name}
+            Rate={d.review}
+            opens={d.status}
          />   
         ))
   return (
@@ -80,10 +100,10 @@ const FeaturedData = () => {
  
     </div>
     <div className='container d-flex justify-content-center'>
-    <Button style={{color:'white',marginBottom:"80px" }} variant="warning">Veiw All <i class="fa-solid fa-chevron-right"></i> </Button>
+    <Button style={{color:'white',marginBottom:"80px" }} variant="warning">Veiw All <i className="fa-solid fa-chevron-right"></i> </Button>
     </div>
     </>
   )
 }
 
-export default FeaturedData
+export default FeaturedData;

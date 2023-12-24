@@ -1,36 +1,38 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import FlashDeals from './FlashDealsDesgin'
+import axios from 'axios';
 
 
 const FlashDealsData = () => {
-    const data=[
-        {imageUrl :require('../images/im.png'),
-        present:` 15`,
-        Title:`Greys Vage`,
-        DaysRemaining:`10 Days Remaining`,
-        },
-        {imageUrl :require('../images/ha.png'),
-        present:` 13`,
-        Title:`Greys Vage`,
-        DaysRemaining:`8 Days Remaining`,
-        },
-        {imageUrl :require('../images/im.png'),
-        present:` 20`,
-        Title:`Greys Vage`,
-        DaysRemaining:`5 Days Remaining`,
-        },
-        {imageUrl :require('../images/Image4.png'),
-        present:` 25`,
-        Title:`Greys Vage`,
-        DaysRemaining:`2 Days Remaining`,
-        },
-        ]
-    const card= data.map((d)=>(
+  const [flashDealsData, setFlashDealsData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("https://restaurant-project-drab.vercel.app/meal/getallMeal",
+        {headers:{
+          "Access-Control-Allow-Origin":true
+        }},{ crossDomain: true });
+        setFlashDealsData(response.data.result);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+  if (loading){
+    return(<p>loading</p>)
+  }
+  
+    const card= flashDealsData.map((d)=>(
         <FlashDeals
-        imageUrl={d.imageUrl}
-        present={d.present}
-        Title={d.Title}
-        DaysRemaining={d.DaysRemaining}
+        key={d._id}
+        imageUrl={d.image.url}
+        present={d.offer}
+        Title={d.title}
+        DaysRemaining={d.expired}
         /> )
         )
    
@@ -40,5 +42,4 @@ const FlashDealsData = () => {
     </div>
   )
 }
-
-export default FlashDealsData
+export default FlashDealsData;

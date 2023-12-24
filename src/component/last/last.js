@@ -6,7 +6,7 @@ const Last = () => {
     <div className='ParentLast'>
      <div className='container text-center'>
       <h1>Are you ready to order with <br/>the best deals?</h1>
-      <Button className='btnn'>Proceed to order <i class="fa-solid fa-chevron-right"></i> </Button>
+      <Button className='btnn'>Proceed to order <i className="fa-solid fa-chevron-right"></i> </Button>
     </div>
     </div>
   )

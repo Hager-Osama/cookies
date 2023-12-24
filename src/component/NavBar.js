@@ -24,9 +24,9 @@ const NavBar = () => {
 
           <Navbar.Collapse className="basic-navbar-nav justify-content-end mt-3 "> 
           <Nav  className="edit"> 
-           <span style={{color:'#FFB30E'}}><i class="fa-sharp fa-solid fa-magnifying-glass"></i></span> &nbsp;
+           <span style={{color:'#FFB30E'}}><i className="fa-sharp fa-solid fa-magnifying-glass"></i></span> &nbsp;
             <b>Search Food</b> 
-            <button className='btn'><i class="fa-solid fa-user"></i> Login</button>
+            <button className='btn'><i className="fa-solid fa-user"></i> Login</button>
           </Nav>
         </Navbar.Collapse>
 

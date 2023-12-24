@@ -13,4 +13,4 @@ const SearchFoodDesgin = ({imageFood,title}) => {
   )
 }
 
-export default SearchFoodDesgin
+export default SearchFoodDesgin;

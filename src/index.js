@@ -4,10 +4,7 @@ import './index.css';
 import App from './App';
 /* The following line can be included in your src/index.js or App.js file */
 import '../node_modules/react-bootstrap/dist/react-bootstrap';
-import "../node_modules/bootstrap/dist/css/bootstrap.css"
-
-
-
+import "../node_modules/bootstrap/dist/css/bootstrap.css";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

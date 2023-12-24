@@ -1,10 +1,30 @@
 
+import { useEffect, useState } from 'react'
 import DetailsCardDesign from './DetailsCardDesign'
+import axios from 'axios';
 
 
 const DetailsCardData = () => {
- 
-    const data=[{
+  const [data,setData]=useState([]);
+  const [loading,setLoading]=useState(false);
+  useEffect(()=>{
+    const fetchData=async()=>{
+    try {
+      const response= await axios.get("https://restaurant-project-drab.vercel.app/bestFood/getBestFood")
+      setData(response.data.result)
+    } catch (error) {
+      console.log('Error fetching data:', error)
+    }finally{
+      setLoading(false) 
+   }
+  };
+  fetchData();
+  })
+  if(loading){
+    return(<h3>loading.........</h3>)
+  }
+  
+    /*const data=[{
       detailsImage:require('../../images/ImageDetails1.png'),
       headline:`Best deals`,
       spanText:`Crispy Sandwiches`,
@@ -23,12 +43,12 @@ const DetailsCardData = () => {
       spanText:` Pizza?`,
       description:`Pair up with a friend and enjoy the hot and crispy pizza pops. Try it with the best deals.`,
     },
-  ]
-  const card=data.map((d, index)=>(
+  ]*/
+  const cards=data.map((d, index)=>(
     <DetailsCardDesign
-    key={index}
-    detailsImage={d.detailsImage}
-    headline={d.headline}
+    key={d._id}
+    detailsImage={d.image.url}
+    headline={d.title}
     spanText={d.spanText}
     description={d.description}
     isEvenCard={index%2===0}
@@ -39,10 +59,10 @@ const DetailsCardData = () => {
   
     <div className='container'>
       
-      {card}
+      {cards}
       
     </div>
   )
 }
 
-export default DetailsCardData
+export default DetailsCardData;

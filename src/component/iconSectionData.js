@@ -20,8 +20,9 @@ const IconSectionData = () => {
         },
         ]
 
-        const card= data.map((d)=>(
+        const card= data.map((d,index)=>(
           <IconSection
+          key={index}
           Icon={d.Icon}
           Title={d.Title}
           description={d.description}
