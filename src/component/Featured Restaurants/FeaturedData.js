@@ -107,34 +107,40 @@ const FeaturedData = () => {
       </div>
 
 
-    {/*dialog */}
-    <Button onClick={() => setShowAddCardDialog(true)}>ADD NEW CARD</Button>
-      <ModalDialog  open={showAddCardDialog} onClose={handleDialogClose}>
-        <Form>
-          <Form.Group controlId="image">
-            <Form.Label>Image</Form.Label>
-            <Form.Control type="file" onChange={handleImageChange} />
-          </Form.Group>
-          <Form.Group controlId="name">
-          <Form.Label>Title</Form.Label>
-          <Form.Control type="text" name="name" onChange={handleInputChange} />
-        </Form.Group>
-        <Form.Group controlId="offer">
-          <Form.Label>Offer (%)</Form.Label>
-          <Form.Control type="number" name="offer" onChange={handleInputChange} />
-        </Form.Group>
-        <Form.Group controlId="review">
-          <Form.Label>Review</Form.Label>
-          <Form.Control type="number" name="review" onChange={handleInputChange} />
-        </Form.Group>
-          <Form.Group controlId="logo">
-            <Form.Label>Logo</Form.Label>
-            <Form.Control type="file" onChange={handleLogoChange} />
-          </Form.Group>
-          
-          <Button onClick={handleAddCard}>Submit</Button>
-        </Form>
-      </ModalDialog>
+      {/*dialog */}
+      <Button onClick={() => setShowAddCardDialog(true)}>ADD NEW CARD</Button>
+      <Modal show={showAddCardDialog} onClose={handleDialogClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add New Card</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="image">
+              <Form.Label>Image</Form.Label>
+              <Form.Control type="file" onChange={handleImageChange} />
+            </Form.Group>
+            <Form.Group controlId="name">
+              <Form.Label>Title</Form.Label>
+              <Form.Control type="text" name="name" onChange={handleInputChange} />
+            </Form.Group>
+            <Form.Group controlId="offer">
+              <Form.Label>Offer (%)</Form.Label>
+              <Form.Control type="number" name="offer" onChange={handleInputChange} />
+            </Form.Group>
+            <Form.Group controlId="review">
+              <Form.Label>Review</Form.Label>
+              <Form.Control type="number" name="review" onChange={handleInputChange} />
+            </Form.Group>
+            <Form.Group controlId="logo">
+              <Form.Label>Logo</Form.Label>
+              <Form.Control type="file" onChange={handleLogoChange} />
+            </Form.Group>
+
+            <Button onClick={handleAddCard}>Submit</Button>
+          </Form>
+        </Modal.Body>
+
+      </Modal>
     </>
   )
 }
