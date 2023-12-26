@@ -23,6 +23,17 @@ const ReactCardDate = () => {
     };
     fetchData();
   }, []); // Empty dependency array ensures the effect runs once when the component mounts
+  
+  const handleDelete = async (itemId) => {
+    try {
+      await axios.delete(`https://restaurant-project-drab.vercel.app/popularItems/deletedPopularItems/${itemId}`);
+     //delete from memory***********************************************************
+    //  setApiData(apiData.filter(item => item._id !== itemId));
+
+    } catch (error) {
+      console.error('Error deleting item:', error);
+    }
+  };
   if (loading){
     return(<h2>loading.........</h2>)
   }
@@ -82,6 +93,7 @@ const ReactCardDate = () => {
   location={item.place}
   price={`$${item.price.toFixed(2)}`} 
   // is used to format the price value as a string with two decimal places and prepended with a dollar sign ('$').
+  onDelete={() => handleDelete(item._id)} // Pass the item ID to the delete function
   /> )
   )
   return (

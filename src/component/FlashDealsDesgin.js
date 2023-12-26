@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 const FlashDeals = ({imageUrl,present,Title,DaysRemaining}) => {
   return (
@@ -11,6 +12,7 @@ const FlashDeals = ({imageUrl,present,Title,DaysRemaining}) => {
       <Card.Body>
         <Card.Title  style={{marginBottom:"20px"}}>{Title}</Card.Title>
         <span className='text'>{DaysRemaining}</span>
+        
       </Card.Body>
     </Card>
     

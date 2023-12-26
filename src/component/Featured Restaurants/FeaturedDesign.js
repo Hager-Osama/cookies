@@ -1,9 +1,10 @@
-import { color } from 'framer-motion';
+
 import React from 'react'
+import { Button } from 'react-bootstrap';
 
 import Card from 'react-bootstrap/Card';
 
-const FeaturedDesign = ({imageUrl,present,iconimage,Title,Rate,opens}) => {
+const FeaturedDesign = ({imageUrl,present,iconimage,Title,Rate,opens,onDelete}) => {
    // if (opens !== "Open Now") {   return null; }
   return (
     <>
@@ -26,7 +27,7 @@ const FeaturedDesign = ({imageUrl,present,iconimage,Title,Rate,opens}) => {
         
         </Card.Title>
       <span className='text open-now '>{opens}</span>
-
+      <Button onClick={onDelete}>Delete</Button>
     </Card.Body>
   </Card>
   </>

@@ -22,6 +22,8 @@ const FlashDealsData = () => {
     };
     fetchData();
   }, []);
+
+
   if (loading){
     return(<p>loading</p>)
   }
@@ -33,6 +35,7 @@ const FlashDealsData = () => {
         present={d.offer}
         Title={d.title}
         DaysRemaining={d.expired}
+        
         /> )
         )
    
