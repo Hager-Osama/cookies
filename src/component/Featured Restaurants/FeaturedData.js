@@ -108,7 +108,7 @@ const FeaturedData = () => {
 
 
       {/*dialog */}
-      <Button onClick={() => setShowAddCardDialog(true)}>ADD NEW CARD</Button>
+      <Button style={{marginLeft:"46%"}} onClick={() => setShowAddCardDialog(true)}>ADD NEW CARD</Button>
       <Modal show={showAddCardDialog} onClose={handleDialogClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add New Card</Modal.Title>
