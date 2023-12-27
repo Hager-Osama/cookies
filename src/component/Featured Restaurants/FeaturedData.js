@@ -48,13 +48,23 @@ const FeaturedData = () => {
   /* POST */
   const handleAddCard = async () => {
     try {
+      const formDataBody = new FormData();
+
+      formDataBody.append('name', newCardData.name);
+      formDataBody.append('image', newCardData.image);
+      formDataBody.append('offer', newCardData.offer);
+      formDataBody.append('speed', newCardData.speed);
+      formDataBody.append('logo', newCardData.logo);
+      formDataBody.append('review', newCardData.review);
+      formDataBody.append('status', 'Open Now');
+
       const response = await axios.post(
-        "https://restaurant-project-drab.vercel.app/restaurant/addRestaurant", newCardData);
+        "https://restaurant-project-drab.vercel.app/restaurant/createRestaurant", formDataBody);
       // Update the data state after successful submission
       setData([...data, response.data.result]);
       setShowAddCardDialog(false); // Close the dialog
       setNewCardData({
-        ...newCardData, // Reset form fields
+        ...newCardData // Reset form fields
       });
     } catch (error) {
       console.error('Error adding card:', error);
@@ -67,6 +77,10 @@ const FeaturedData = () => {
   const handleImageChange = (event) => {
     setNewCardData({ ...newCardData, image: event.target.files[0] });
   };
+
+  function onSpeedChanged(event) {
+    setNewCardData({ ...newCardData, speed: event.target.value });
+  }
 
   const handleLogoChange = (event) => {
     setNewCardData({ ...newCardData, logo: event.target.files[0] });
@@ -85,14 +99,13 @@ const FeaturedData = () => {
   const card = data.map((d) => (
     <FeaturedDesign
       key={d._id}
-   //   imageUrl={d.image.url}
+      imageUrl={d?.image?.url}
       present={d.offer}
-    //  iconimage={d.logo.url}
+      iconimage={d.logo?.url}
       Title={d.name}
       Rate={d.review}
       opens={d.status}
-      onDelete={() => handleDelete(d._id)}
-    />
+      onDelete={() => handleDelete(d._id)} />
   ))
   return (
     <>
@@ -108,9 +121,9 @@ const FeaturedData = () => {
 
 
       {/*dialog */}
-      <Button style={{marginLeft:"46%"}} onClick={() => setShowAddCardDialog(true)}>ADD NEW CARD</Button>
-      <Modal show={showAddCardDialog} onClose={handleDialogClose}>
-        <Modal.Header closeButton>
+      <Button style={{ marginLeft: "46%" }} onClick={() => setShowAddCardDialog(true)}>ADD NEW CARD</Button>
+      <Modal show={showAddCardDialog} >
+        <Modal.Header closeButton onClick={handleDialogClose}>
           <Modal.Title>Add New Card</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -126,6 +139,13 @@ const FeaturedData = () => {
             <Form.Group controlId="offer">
               <Form.Label>Offer (%)</Form.Label>
               <Form.Control type="number" name="offer" onChange={handleInputChange} />
+            </Form.Group>
+            <Form.Group controlId="speed">
+              <Form.Label>Speed</Form.Label>
+              <Form.Select as="select" name="speed" onChange={onSpeedChanged}>
+                <option value="Fast">Fast</option>
+                <option value="Slow">Slow</option>
+              </Form.Select>
             </Form.Group>
             <Form.Group controlId="review">
               <Form.Label>Review</Form.Label>
