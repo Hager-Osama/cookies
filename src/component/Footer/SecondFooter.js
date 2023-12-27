@@ -67,10 +67,10 @@ const SecondFooter = () => {
                 </div>
                 <h5 style={{color:'#B2B2B2'}}>Receive exclusive offers in your mailbox</h5>
                 <form>
-                <div class="form-group">
-                  <input type="email" class="" id="example"
+                <div className="form-group">
+                  <input type="email" className="" id="example"
                   aria-describedby="emailHelp" placeholder="Enter email"/>
-                  <button type="submit" class="btnn">Subscribe</button>
+                  <button type="submit" className="btnn">Subscribe</button>
                 </div>
                
                 </form>

@@ -15,7 +15,7 @@ const FeaturedData = () => {
     name: '',
     offer: 0,
     status: '',
-    speed: '',
+    speed: 'Fast',
     review: 0,
   });
 
@@ -127,18 +127,21 @@ const FeaturedData = () => {
           <Modal.Title>Add New Card</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleAddCard}>
+          <Form onSubmit={event => {
+            event.preventDefault();
+            handleAddCard();
+          }}>
             <Form.Group controlId="image">
               <Form.Label>Image</Form.Label>
-              <Form.Control type="file" onChange={handleImageChange} required/>
+              <Form.Control type="file" onChange={handleImageChange} required />
             </Form.Group>
             <Form.Group controlId="name">
               <Form.Label>Title</Form.Label>
-              <Form.Control type="text" name="name" onChange={handleInputChange}required />
+              <Form.Control type="text" name="name" onChange={handleInputChange} required />
             </Form.Group>
             <Form.Group controlId="offer">
               <Form.Label>Offer (%)</Form.Label>
-              <Form.Control type="number" name="offer" onChange={handleInputChange}required />
+              <Form.Control type="number" name="offer" onChange={handleInputChange} required />
             </Form.Group>
             <Form.Group controlId="speed">
               <Form.Label>Speed</Form.Label>
@@ -149,11 +152,11 @@ const FeaturedData = () => {
             </Form.Group>
             <Form.Group controlId="review">
               <Form.Label>Review</Form.Label>
-              <Form.Control type="number" name="review" onChange={handleInputChange}required />
+              <Form.Control type="number" name="review" onChange={handleInputChange} required />
             </Form.Group>
             <Form.Group controlId="logo">
               <Form.Label>Logo</Form.Label>
-              <Form.Control type="file" onChange={handleLogoChange}required />
+              <Form.Control type="file" onChange={handleLogoChange} required />
             </Form.Group>
             <Button variant="primary" type="submit">
               Submit
