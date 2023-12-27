@@ -127,7 +127,7 @@ const FeaturedData = () => {
           <Modal.Title>Add New Card</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={event => {
+          <Form onSubmit={(event) => {
             event.preventDefault();
             handleAddCard();
           }}>
