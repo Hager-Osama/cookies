@@ -127,36 +127,37 @@ const FeaturedData = () => {
           <Modal.Title>Add New Card</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleAddCard}>
             <Form.Group controlId="image">
               <Form.Label>Image</Form.Label>
-              <Form.Control type="file" onChange={handleImageChange} />
+              <Form.Control type="file" onChange={handleImageChange} required/>
             </Form.Group>
             <Form.Group controlId="name">
               <Form.Label>Title</Form.Label>
-              <Form.Control type="text" name="name" onChange={handleInputChange} />
+              <Form.Control type="text" name="name" onChange={handleInputChange}required />
             </Form.Group>
             <Form.Group controlId="offer">
               <Form.Label>Offer (%)</Form.Label>
-              <Form.Control type="number" name="offer" onChange={handleInputChange} />
+              <Form.Control type="number" name="offer" onChange={handleInputChange}required />
             </Form.Group>
             <Form.Group controlId="speed">
               <Form.Label>Speed</Form.Label>
-              <Form.Select as="select" name="speed" onChange={onSpeedChanged}>
+              <Form.Select as="select" name="speed" onChange={onSpeedChanged} required>
                 <option value="Fast">Fast</option>
                 <option value="Slow">Slow</option>
               </Form.Select>
             </Form.Group>
             <Form.Group controlId="review">
               <Form.Label>Review</Form.Label>
-              <Form.Control type="number" name="review" onChange={handleInputChange} />
+              <Form.Control type="number" name="review" onChange={handleInputChange}required />
             </Form.Group>
             <Form.Group controlId="logo">
               <Form.Label>Logo</Form.Label>
-              <Form.Control type="file" onChange={handleLogoChange} />
+              <Form.Control type="file" onChange={handleLogoChange}required />
             </Form.Group>
-
-            <Button onClick={handleAddCard}>Submit</Button>
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
           </Form>
         </Modal.Body>
 
