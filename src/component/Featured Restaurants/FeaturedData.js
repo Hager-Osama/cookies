@@ -85,9 +85,9 @@ const FeaturedData = () => {
   const card = data.map((d) => (
     <FeaturedDesign
       key={d._id}
-      imageUrl={d.image.url}
+   //   imageUrl={d.image.url}
       present={d.offer}
-      iconimage={d.logo.url}
+    //  iconimage={d.logo.url}
       Title={d.name}
       Rate={d.review}
       opens={d.status}

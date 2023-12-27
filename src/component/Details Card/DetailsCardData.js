@@ -98,7 +98,7 @@ const DetailsCardData = () => {
   const cards=data.map((d, index)=>(
     <DetailsCardDesign
     key={d._id}
-    detailsImage={d.image.url} 
+    detailsImage={d.image?.url} 
     headline={d.title}
     spanText={d.spanText}
     description={d.description}

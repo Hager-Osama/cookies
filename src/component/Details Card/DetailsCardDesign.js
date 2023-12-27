@@ -13,7 +13,7 @@ const DetailsCardDesign = ({ detailsImage, headline, spanText, description, isEv
     </div>
 
     const imgDev = <div className='DetailsImage'>
-        <img src={detailsImage} />
+        <img  src={detailsImage} alt=" "/>
     </div>
 
     return (
