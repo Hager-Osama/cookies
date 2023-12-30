@@ -8,6 +8,7 @@ const FeaturedData = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  
   //for post request and dialog
   const [showAddCardDialog, setShowAddCardDialog] = useState(false); // State for dialog
   const [newCardData, setNewCardData] = useState({
