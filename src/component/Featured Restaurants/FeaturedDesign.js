@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 
 import Card from 'react-bootstrap/Card';
 
-const FeaturedDesign = ({imageUrl,present,iconimage,Title,Rate,opens,onDelete}) => {
+const FeaturedDesign = ({imageUrl,present,iconimage,Title,Rate,opens,onDelete,onEdit}) => {
    // if (opens !== "Open Now") {   return null; }
   return (
     <>
@@ -28,6 +28,7 @@ const FeaturedDesign = ({imageUrl,present,iconimage,Title,Rate,opens,onDelete}) 
         </Card.Title>
       <span className='text open-now '>{opens}</span>
       <Button onClick={onDelete}>Delete</Button>
+      <Button variant="info" onClick={onEdit}>Edit</Button>
     </Card.Body>
   </Card>
   </>

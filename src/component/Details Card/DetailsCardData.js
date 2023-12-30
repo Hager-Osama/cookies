@@ -66,7 +66,7 @@ const DetailsCardData = () => {
        formDataUpload );
 
       setData([...data, response.data.result]);
-      setShowForm(false);;
+      setShowForm(false);
     } catch (error) {
       console.error('Error posting data:', error);
     }
