@@ -8,7 +8,7 @@ const FeaturedData = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  
+
   //for post request and dialog
   const [showAddCardDialog, setShowAddCardDialog] = useState(false); // State for dialog
   const [newCardData, setNewCardData] = useState({
@@ -73,8 +73,10 @@ const FeaturedData = () => {
   };
   const handleDialogClose = () => {
     setShowAddCardDialog(false);
+
+
     setNewCardData({
-      speed: 'Fast'
+      speed: 'Fast',
     });
   };
 
@@ -107,6 +109,8 @@ const FeaturedData = () => {
       status: resturant.status,
       speed: resturant.speed,
       review: resturant.review,
+      imageUrl: resturant.image.url,
+      logoUrl: resturant.logo.url,
     });
     setShowAddCardDialog(true);
   }
@@ -149,9 +153,9 @@ const FeaturedData = () => {
   const card = data.map((d) => (
     <FeaturedDesign
       key={d._id}
-      imageUrl={d?.image?.url}
+      imageUrl={d.image.url}
       present={d.offer}
-      iconimage={d.logo?.url}
+      iconimage={d.logo.url}
       Title={d.name}
       Rate={d.review}
       opens={d.status}
@@ -186,7 +190,13 @@ const FeaturedData = () => {
           }}>
             <Form.Group controlId="image">
               <Form.Label>Image</Form.Label>
-              <Form.Control type="file" onChange={handleImageChange} required={newCardData.id === null} />
+              <br />
+              {
+                newCardData.imageUrl !== undefined ?
+                  <img src={newCardData.imageUrl} style={{ width: '100px', height: '100px' }} />
+                  : null
+              }
+              <Form.Control type="file" onChange={handleImageChange} required={newCardData.id === undefined} />
             </Form.Group>
             <Form.Group controlId="name">
               <Form.Label>Title</Form.Label>
@@ -209,7 +219,9 @@ const FeaturedData = () => {
             </Form.Group>
             <Form.Group controlId="logo">
               <Form.Label>Logo</Form.Label>
-              <Form.Control type="file" onChange={handleLogoChange} required={newCardData.id === null} />
+              <br />
+              {newCardData.logoUrl === undefined ? null : <img src={newCardData.logoUrl} style={{ width: '100px', height: '100px' }} />}
+              <Form.Control type="file" onChange={handleLogoChange} required={newCardData.id === undefined} />
             </Form.Group>
             <Button variant="primary" type="submit">
               Submit
@@ -223,3 +235,13 @@ const FeaturedData = () => {
 }
 
 export default FeaturedData;
+
+
+
+
+var s = {}
+
+s = { id: 4 }
+
+
+console.log(s.id)
