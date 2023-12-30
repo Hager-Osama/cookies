@@ -11,7 +11,6 @@ const FeaturedData = () => {
   //for post request and dialog
   const [showAddCardDialog, setShowAddCardDialog] = useState(false); // State for dialog
   const [newCardData, setNewCardData] = useState({
-    id :null,
     image: null,
     logo: null,
     name: '',
@@ -20,7 +19,7 @@ const FeaturedData = () => {
     speed: 'Fast',
     review: 0,
   });
-//get
+  //get
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -72,6 +71,9 @@ const FeaturedData = () => {
   };
   const handleDialogClose = () => {
     setShowAddCardDialog(false);
+    setNewCardData({
+      speed: 'Fast'
+    });
   };
 
   const handleImageChange = (event) => {
@@ -91,7 +93,23 @@ const FeaturedData = () => {
     setNewCardData({ ...newCardData, [name]: value }); // update specific field
   };
   /* End POST */
-   
+   /* PUT */
+   const handleEditCard = async (itemId, editedData) => {
+    try {
+      const response = await axios.put(
+        `https://restaurant-project-drab.vercel.app/restaurant/updateRestaurant/${itemId}`, editedData);
+
+      // Update the data state after successful update
+      setData((prevData) =>
+        prevData.map((item) =>
+          item._id === itemId ? { ...item, ...response.data.result } : item
+        )
+      );
+    } catch (error) {
+      console.error('Error editing card:', error);
+    }
+  };
+  /* End PUT */
   if (loading) {
     return (<p>loading.........</p>)
   }
@@ -106,29 +124,25 @@ const FeaturedData = () => {
       Rate={d.review}
       opens={d.status}
       onDelete={() => handleDelete(d._id)}
-     />
+      onEdit={() => handleEditCard(d._id, editedData)} />
   ))
   return (
     <>
       <h1 className='container text-center' style={{ marginBottom: '70px' }}>Featured Restaurants</h1>
       <div className='d-flex flex-wrap justify-content-evenly container mt-5 '>
-
         {card}
+         {/*dialog edit */}
      
       </div>
+
       <div className='container d-flex justify-content-center'>
         <Button style={{ color: 'white', marginBottom: "80px" }} variant="warning">Veiw All <i className="fa-solid fa-chevron-right"></i> </Button>
       </div>
       
-      
-      {/*dialog POST */}
-      <Button style={{ marginLeft: "46%" }} onClick={() => setShowAddCardDialog(true)}>ADD NEW CARD</Button>
-      <Modal show={showAddCardDialog} >
-        <Modal.Header closeButton onClick={handleDialogClose}>
-          <Modal.Title>Add New Card</Modal.Title>
-        </Modal.Header>
+       {/* Edit Modal */}
+       <Modal show={isEditing}>
         <Modal.Body>
-          <Form onSubmit={(event) => {
+        <Form onSubmit={(event) => {
             event.preventDefault();
             handleAddCard();
           }}>
@@ -144,13 +158,6 @@ const FeaturedData = () => {
               <Form.Label>Offer (%)</Form.Label>
               <Form.Control type="number" name="offer" onChange={handleInputChange} required />
             </Form.Group>
-            <Form.Group controlId="speed">
-              <Form.Label>Speed</Form.Label>
-              <Form.Select as="select" name="speed" onChange={onSpeedChanged} required>
-                <option value="Fast">Fast</option>
-                <option value="Slow">Slow</option>
-              </Form.Select>
-            </Form.Group>
             <Form.Group controlId="review">
               <Form.Label>Review</Form.Label>
               <Form.Control type="number" name="review" onChange={handleInputChange} required />
@@ -158,6 +165,55 @@ const FeaturedData = () => {
             <Form.Group controlId="logo">
               <Form.Label>Logo</Form.Label>
               <Form.Control type="file" onChange={handleLogoChange} required />
+            </Form.Group>
+            <Button variant="primary">
+              Save Changes
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
+
+      {/*dialog POST */}
+      <Button style={{ marginLeft: "46%" }} onClick={() => setShowAddCardDialog(true)}>ADD NEW CARD</Button>
+      <Modal show={showAddCardDialog} onHide={handleDialogClose}>
+        <Modal.Header closeButton >
+          <Modal.Title>Add New Card</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={(event) => {
+            event.preventDefault();
+            if (newCardData.id === null) {
+              handleAddCard();
+            } else {
+              handleEditCard();
+            }
+          }}>
+            <Form.Group controlId="image">
+              <Form.Label>Image</Form.Label>
+              <Form.Control type="file" onChange={handleImageChange} required={newCardData.id === null} />
+            </Form.Group>
+            <Form.Group controlId="name">
+              <Form.Label>Title</Form.Label>
+              <Form.Control type="text" name="name" onChange={handleInputChange} required value={newCardData.name} />
+            </Form.Group>
+            <Form.Group controlId="offer">
+              <Form.Label>Offer (%)</Form.Label>
+              <Form.Control type="number" name="offer" onChange={handleInputChange} required value={newCardData.offer} />
+            </Form.Group>
+            {/* <Form.Group controlId="speed">
+              <Form.Label>Speed</Form.Label>
+              <Form.Select as="select" name="speed" onChange={onSpeedChanged} required value={newCardData.speed}>
+                <option value="Fast">Fast</option>
+                <option value="Slow">Slow</option>
+              </Form.Select>
+            </Form.Group> */}
+            <Form.Group controlId="review">
+              <Form.Label>Review</Form.Label>
+              <Form.Control type="number" name="review" onChange={handleInputChange} required value={newCardData.review} />
+            </Form.Group>
+            <Form.Group controlId="logo">
+              <Form.Label>Logo</Form.Label>
+              <Form.Control type="file" onChange={handleLogoChange} required={newCardData.id === null} />
             </Form.Group>
             <Button variant="primary" type="submit">
               Submit
