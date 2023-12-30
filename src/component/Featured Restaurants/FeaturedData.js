@@ -8,10 +8,11 @@ const FeaturedData = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  
+
   //for post request and dialog
   const [showAddCardDialog, setShowAddCardDialog] = useState(false); // State for dialog
   const [newCardData, setNewCardData] = useState({
+    id: null,
     image: null,
     logo: null,
     name: '',
@@ -72,8 +73,10 @@ const FeaturedData = () => {
   };
   const handleDialogClose = () => {
     setShowAddCardDialog(false);
+
+
     setNewCardData({
-      speed: 'Fast'
+      speed: 'Fast',
     });
   };
 
@@ -94,18 +97,50 @@ const FeaturedData = () => {
     setNewCardData({ ...newCardData, [name]: value }); // update specific field
   };
   /* End POST */
-   /* PUT */
-   const handleEditCard = async (itemId, editedData) => {
+
+
+
+
+  const openEditDialog = (resturant) => {
+    setNewCardData({
+      id: resturant._id,
+      name: resturant.name,
+      offer: resturant.offer,
+      status: resturant.status,
+      speed: resturant.speed,
+      review: resturant.review,
+      imageUrl: resturant.image.url,
+      logoUrl: resturant.logo.url,
+    });
+    setShowAddCardDialog(true);
+  }
+
+
+
+  /* PUT */
+  const handleEditCard = async () => {
+    const formDataBody = new FormData();
+
+    formDataBody.append('name', newCardData.name);
+    formDataBody.append('image', newCardData.image);
+    formDataBody.append('offer', newCardData.offer);
+    formDataBody.append('speed', newCardData.speed);
+    formDataBody.append('logo', newCardData.logo);
+    formDataBody.append('review', newCardData.review);
+    formDataBody.append('status', 'Open Now');
+
     try {
       const response = await axios.put(
-        `https://restaurant-project-drab.vercel.app/restaurant/updateRestaurant/${itemId}`, editedData);
+        `https://restaurant-project-drab.vercel.app/restaurant/updateRestaurant/${newCardData.id}`, formDataBody);
 
       // Update the data state after successful update
-      setData((prevData) =>
-        prevData.map((item) =>
-          item._id === itemId ? { ...item, ...response.data.result } : item
-        )
-      );
+      setData(data.map((item) => {
+        if (item._id === response.data.result._id) {
+          return response.data.result
+        }
+        return item;
+      }));
+      setShowAddCardDialog(false); // Close the dialog
     } catch (error) {
       console.error('Error editing card:', error);
     }
@@ -118,63 +153,27 @@ const FeaturedData = () => {
   const card = data.map((d) => (
     <FeaturedDesign
       key={d._id}
-      imageUrl={d?.image?.url}
+      imageUrl={d.image.url}
       present={d.offer}
-      iconimage={d.logo?.url}
+      iconimage={d.logo.url}
       Title={d.name}
       Rate={d.review}
       opens={d.status}
       onDelete={() => handleDelete(d._id)}
-      onEdit={() => handleEditCard(d._id, editedData)} />
+      onEdit={() => openEditDialog(d)} />
   ))
   return (
     <>
       <h1 className='container text-center' style={{ marginBottom: '70px' }}>Featured Restaurants</h1>
       <div className='d-flex flex-wrap justify-content-evenly container mt-5 '>
         {card}
-         {/*dialog edit */}
-     
       </div>
 
       <div className='container d-flex justify-content-center'>
         <Button style={{ color: 'white', marginBottom: "80px" }} variant="warning">Veiw All <i className="fa-solid fa-chevron-right"></i> </Button>
       </div>
-      
-       {/* Edit Modal */}
-       <Modal show={isEditing}>
-        <Modal.Body>
-        <Form onSubmit={(event) => {
-            event.preventDefault();
-            handleAddCard();
-          }}>
-            <Form.Group controlId="image">
-              <Form.Label>Image</Form.Label>
-              <Form.Control type="file" onChange={handleImageChange} required />
-            </Form.Group>
-            <Form.Group controlId="name">
-              <Form.Label>Title</Form.Label>
-              <Form.Control type="text" name="name" onChange={handleInputChange} required />
-            </Form.Group>
-            <Form.Group controlId="offer">
-              <Form.Label>Offer (%)</Form.Label>
-              <Form.Control type="number" name="offer" onChange={handleInputChange} required />
-            </Form.Group>
-            <Form.Group controlId="review">
-              <Form.Label>Review</Form.Label>
-              <Form.Control type="number" name="review" onChange={handleInputChange} required />
-            </Form.Group>
-            <Form.Group controlId="logo">
-              <Form.Label>Logo</Form.Label>
-              <Form.Control type="file" onChange={handleLogoChange} required />
-            </Form.Group>
-            <Button variant="primary">
-              Save Changes
-            </Button>
-          </Form>
-        </Modal.Body>
-      </Modal>
 
-      {/*dialog POST */}
+      {/* Post Modal */}
       <Button style={{ marginLeft: "46%" }} onClick={() => setShowAddCardDialog(true)}>ADD NEW CARD</Button>
       <Modal show={showAddCardDialog} onHide={handleDialogClose}>
         <Modal.Header closeButton >
@@ -191,7 +190,13 @@ const FeaturedData = () => {
           }}>
             <Form.Group controlId="image">
               <Form.Label>Image</Form.Label>
-              <Form.Control type="file" onChange={handleImageChange} required={newCardData.id === null} />
+              <br />
+              {
+                newCardData.imageUrl !== undefined ?
+                  <img src={newCardData.imageUrl} style={{ width: '100px', height: '100px' }} />
+                  : null
+              }
+              <Form.Control type="file" onChange={handleImageChange} required={newCardData.id === undefined} />
             </Form.Group>
             <Form.Group controlId="name">
               <Form.Label>Title</Form.Label>
@@ -214,7 +219,9 @@ const FeaturedData = () => {
             </Form.Group>
             <Form.Group controlId="logo">
               <Form.Label>Logo</Form.Label>
-              <Form.Control type="file" onChange={handleLogoChange} required={newCardData.id === null} />
+              <br />
+              {newCardData.logoUrl === undefined ? null : <img src={newCardData.logoUrl} style={{ width: '100px', height: '100px' }} />}
+              <Form.Control type="file" onChange={handleLogoChange} required={newCardData.id === undefined} />
             </Form.Group>
             <Button variant="primary" type="submit">
               Submit
