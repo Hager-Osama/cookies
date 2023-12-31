@@ -63,7 +63,7 @@ const ReactCardDate = () => {
     try {
       await axios.delete(`https://restaurant-project-drab.vercel.app/popularItems/deletedPopularItems/${itemId}`);
      //delete from memory***********************************************************
-     //setApiData(apiData.filter(item => item._id !== itemId));
+     setApiData(apiData.filter(item => item._id !== itemId));
     } catch (error) {
       console.error('Error deleting item:', error);
     }
@@ -190,7 +190,6 @@ const ReactCardDate = () => {
             if(formData.id===undefined){handleSubmitForm();} else{ handleEditCard();}}}>
             <Form.Group controlId="formImage">
               <Form.Label>Image</Form.Label><br/>
-              
               {
                 formData.imageUrl === undefined ?
                  null

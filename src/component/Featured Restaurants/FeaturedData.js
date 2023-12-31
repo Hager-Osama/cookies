@@ -184,9 +184,9 @@ const FeaturedData = () => {
               <Form.Label>Image</Form.Label>
               <br />
               {
-                newCardData.imageUrl !== undefined ?
-                  <img src={newCardData.imageUrl} style={{ width: '100px', height: '100px' }} />
-                  : null
+                newCardData.imageUrl === undefined ?
+                null:
+                <img src={newCardData.imageUrl} style={{ width: '100px', height: '100px' }} />
               }
               <Form.Control type="file" onChange={handleImageChange} required={newCardData.id === undefined} />
             </Form.Group>
