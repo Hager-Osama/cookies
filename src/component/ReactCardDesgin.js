@@ -1,6 +1,6 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button';
-const ReactCardDesgin = ({image,title,price,location,onDelete}) => {
+const ReactCardDesgin = ({image,title,price,location,onDelete,onEdit}) => {
   return (
     <div className='card2' >
     <div > 
@@ -15,6 +15,7 @@ const ReactCardDesgin = ({image,title,price,location,onDelete}) => {
       boxShadow: '0px 20px 40px 0px rgba(250, 99, 35, 0.24), 0px 5px 10px 0px rgba(253, 114, 92, 0.22)'}}>
       Order Now</Button>
       <Button onClick={onDelete}>Delete</Button>
+      <Button variant='info' onClick={onEdit}>Edit</Button>
     </div>
   </div>
   )

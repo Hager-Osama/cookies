@@ -10,13 +10,40 @@ const ReactCardDate = () => {
   const [apiData, setApiData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm ,setShowForm] = useState( false );
-  const [formData, setFormData] =useState({
-    title:"",
-    item:null,
-    price:"",
-    place:"",
-  });
+  const [formData, setFormData] =useState({});
+ //PUT
+ const openEditDialog =(card)=>{
+  setFormData({
+    id: card._id,
+    title:card.title,
+    price:card.price,
+    place:card.place,
+    imageUrl:card.image.url
 
+  });
+  setShowForm(true);
+ };
+ const handleEditCard=async()=>{
+  
+  const formDataBody= new FormData();
+  formDataBody.append("title",formData.title);
+  formDataBody.append("item",formData.item);
+  formDataBody.append("price",formData.price);
+  formDataBody.append("place",formData.place);
+  try {
+    const response= await axios.put
+    (`https://restaurant-project-drab.vercel.app/popularItems/updatePopularItems/${formData.id}`,formDataBody)
+    setApiData(apiData.map((event)=>{
+      if(event._id === response.data.result._id){
+        return response.data.result
+      }
+      return event;
+    }));
+    setShowForm(false);
+  } catch (error) {
+    console.error('Error editing card:', error);
+  }
+ };
  //get 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,13 +68,18 @@ const ReactCardDate = () => {
       console.error('Error deleting item:', error);
     }
   };
-
   //POST
-  const handelPostData =async ()=>{
+  const handelPostData = ()=>{
     setShowForm(true);
   };
   const handleCloseForm =()=>{
     setShowForm(false);
+    setFormData({
+        title: "",
+        item: null,
+        price: "",
+        place: "",
+    });
   };
   const handleInputChange =(e)=>{
    const {name ,value}=e.target;
@@ -63,8 +95,8 @@ const ReactCardDate = () => {
       item:file,
     });
   };
-  const handleSubmitForm=async(e)=>{
-    e.preventDefault();
+  const handleSubmitForm=async()=>{
+    
     try{
       const formDataUpload= new FormData();
       formDataUpload.append('title',formData.title);
@@ -140,6 +172,7 @@ const ReactCardDate = () => {
   price={`$${item.price.toFixed(2)}`} 
   // is used to format the price value as a string with two decimal places and prepended with a dollar sign ('$').
   onDelete={() => handleDelete(item._id)} // Pass the item ID to the delete function
+  onEdit={()=>openEditDialog(item)}
   /> )
   )
   return (
@@ -152,11 +185,20 @@ const ReactCardDate = () => {
           <Modal.Title>Add New Card</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-          <Form onSubmit={handleSubmitForm}>
+          <Form onSubmit={(e)=>{
+            e.preventDefault();
+            if(formData.id===undefined){handleSubmitForm();} else{ handleEditCard();}}}>
             <Form.Group controlId="formImage">
-              <Form.Label>Image</Form.Label>
-              <Form.Control type="file" name="item" accept="image/*" onChange={handleFileChange} required />
-            </Form.Group>
+              <Form.Label>Image</Form.Label><br/>
+              
+              {
+                formData.imageUrl === undefined ?
+                 null
+                :<img src={formData.imageUrl} style={{ width: '100px', height: '100px' }} />
+              }
+              <Form.Control type="file" name="item" accept="image/*" onChange={handleFileChange}
+               required={formData.id === undefined}  />
+              </Form.Group>
             <Form.Group controlId="formTitle">
               <Form.Label>Title</Form.Label>
               <Form.Control type="text" name="title" value={formData.title} onChange={handleInputChange} required />

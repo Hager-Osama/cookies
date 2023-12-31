@@ -7,12 +7,9 @@ import Form from 'react-bootstrap/Form';
 const FeaturedData = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-
-
   //for post request and dialog
   const [showAddCardDialog, setShowAddCardDialog] = useState(false); // State for dialog
   const [newCardData, setNewCardData] = useState({
-    id: null,
     image: null,
     logo: null,
     name: '',
@@ -98,9 +95,7 @@ const FeaturedData = () => {
   };
   /* End POST */
 
-
-
-
+  /* PUT */
   const openEditDialog = (resturant) => {
     setNewCardData({
       id: resturant._id,
@@ -116,14 +111,12 @@ const FeaturedData = () => {
   }
 
 
-
-  /* PUT */
   const handleEditCard = async () => {
     const formDataBody = new FormData();
 
     formDataBody.append('name', newCardData.name);
-    formDataBody.append('image', newCardData.image);
     formDataBody.append('offer', newCardData.offer);
+    formDataBody.append('image', newCardData.image);
     formDataBody.append('speed', newCardData.speed);
     formDataBody.append('logo', newCardData.logo);
     formDataBody.append('review', newCardData.review);
@@ -132,7 +125,6 @@ const FeaturedData = () => {
     try {
       const response = await axios.put(
         `https://restaurant-project-drab.vercel.app/restaurant/updateRestaurant/${newCardData.id}`, formDataBody);
-
       // Update the data state after successful update
       setData(data.map((item) => {
         if (item._id === response.data.result._id) {
@@ -182,7 +174,7 @@ const FeaturedData = () => {
         <Modal.Body>
           <Form onSubmit={(event) => {
             event.preventDefault();
-            if (newCardData.id === null) {
+            if (newCardData.id === undefined) {
               handleAddCard();
             } else {
               handleEditCard();
