@@ -1,14 +1,16 @@
-import React from 'react'
+import React from 'react';
+import Card from 'react-bootstrap/Card';
 
 const SearchFoodDesgin = ({imageFood,title}) => {
   return (
-    
-     <div className='container'>
-      <div className='imagesFood'>
-        <img  src={imageFood}/>
-        <h6 className="text-center mt-2">{title}</h6>
-      </div>
-     </div>
+    <>
+     <Card className='search' style={{ width: '13rem' ,border:'none',backgroundColor:'transparent'}}>
+      <Card.Img className='imagesFood' src={imageFood} />
+      <Card.Body>
+        <Card.Title className="text-center">{title}</Card.Title>
+      </Card.Body>
+     </Card>
+    </>
    
   )
 }

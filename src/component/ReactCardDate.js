@@ -4,9 +4,11 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import ReactCardDesgin from './ReactCardDesgin.js';
 import { Container, Button, Modal, Form} from 'react-bootstrap';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const ReactCardDate = () => { 
-
+  const notify = (message) => toast(message);
+  
   const [apiData, setApiData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm ,setShowForm] = useState( false );
@@ -35,11 +37,12 @@ const ReactCardDate = () => {
     (`https://restaurant-project-drab.vercel.app/popularItems/updatePopularItems/${formData.id}`,formDataBody)
     setApiData(apiData.map((event)=>{
       if(event._id === response.data.result._id){
-        return response.data.result
+        return response.data.result;
       }
       return event;
     }));
     setShowForm(false);
+    notify("post updated!");
   } catch (error) {
     console.error('Error editing card:', error);
   }
@@ -62,8 +65,9 @@ const ReactCardDate = () => {
   const handleDelete = async (itemId) => {
     try {
       await axios.delete(`https://restaurant-project-drab.vercel.app/popularItems/deletedPopularItems/${itemId}`);
-     //delete from memory***********************************************************
-     setApiData(apiData.filter(item => item._id !== itemId));
+      //delete from memory***********************************************************
+      setApiData(apiData.filter(item => item._id !== itemId));
+      toast.success("Card deleted successfully!"); // Show success toast message
     } catch (error) {
       console.error('Error deleting item:', error);
     }
@@ -96,7 +100,6 @@ const ReactCardDate = () => {
     });
   };
   const handleSubmitForm=async()=>{
-    
     try{
       const formDataUpload= new FormData();
       formDataUpload.append('title',formData.title);
@@ -107,6 +110,7 @@ const ReactCardDate = () => {
       formDataUpload)
       setApiData([...apiData,response.data.result]);
       setShowForm(false);
+      notify("wow item created successfully!");
     }catch(error){
       console.error('Error posting data:', error);
     }
@@ -177,6 +181,7 @@ const ReactCardDate = () => {
   )
   return (
     <Container> 
+      <ToastContainer />
       <Carousel responsive={responsive}> 
         {card}
          {/* Form Modal */}
@@ -217,7 +222,7 @@ const ReactCardDate = () => {
           </Modal.Body>
          </Modal>
       </Carousel>
-         <Button variant="success" onClick={handelPostData}> Add card</Button> 
+         <Button style={{ marginLeft: "46%" }} variant="success" onClick={handelPostData}> Add card</Button> 
    </Container>    
      
   )

@@ -4,6 +4,9 @@ import SearchFoodDesgin from './SearchFoodDesgin'
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import { Modal, Form} from 'react-bootstrap';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const SearchFoodDate = () => {
 
     const [data, setData] = useState([]);
@@ -57,11 +60,11 @@ const SearchFoodDate = () => {
             ,formDataUpload) 
             setData([...data,response.data.result]);
             setShowForm(false);
+            toast.success("Card created successfully!"); // Show success toast message
         } catch (error) {
           console.log("erorr posting data:",error)  
         }
     }
-
 
     if (loading) {
         return (<h3>loading.........</h3>)
@@ -76,18 +79,13 @@ const SearchFoodDate = () => {
 
     return (
         <div style={{ backgroundColor: "#FEFAF1", padding: "82px 0px" }}>
-            <div className='container d-flex justify-content-between'>
+            <div className='container d-flex justify-content-center'>
                 <div className='textFood'>
                     <h1 style={{ marginBottom: "80px" }}>Search by Food</h1>
                 </div>
-                <div className='iconsarrow'>
-                    <span >View All <i className="fa-solid fa-chevron-right"></i></span>
-                    <span ><i className="fa-solid fa-chevron-left"></i></span>
-                    <span > <i className="fa-solid fa-chevron-right"></i> </span>
-                </div>
             </div>
 
-            <div className='container d-flex justify-content-center '>
+            <div className='d-flex flex-wrap justify-content-evenly container '>
                 {items}
 
                  {/* Form Modal */}

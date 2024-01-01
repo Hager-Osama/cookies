@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import FeaturedDesign from './FeaturedDesign';
 import { Button, Modal } from 'react-bootstrap';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Form from 'react-bootstrap/Form';
 const FeaturedData = () => {
@@ -38,6 +40,7 @@ const FeaturedData = () => {
       await axios.delete(`https://restaurant-project-drab.vercel.app/restaurant/deleteRestaurant/${itemId}`);
       // After successful deletion, update the state to remove the deleted item
       setData(data.filter(item => item._id !== itemId));
+      toast.success("Card deleted successfully!"); // Show success deleted toast message
     } catch (error) {
       console.error('Error deleting item:', error);
     }
@@ -61,6 +64,7 @@ const FeaturedData = () => {
       // Update the data state after successful submission
       setData([...data, response.data.result]);
       setShowAddCardDialog(false); // Close the dialog
+      toast.success("Card created successfully!"); // Show success toast message
       setNewCardData({
         ...newCardData // Reset form fields
       });
@@ -133,6 +137,7 @@ const FeaturedData = () => {
         return item;
       }));
       setShowAddCardDialog(false); // Close the dialog
+      toast.success("Card updated successfully!"); // Show update toast message
     } catch (error) {
       console.error('Error editing card:', error);
     }
@@ -162,7 +167,7 @@ const FeaturedData = () => {
       </div>
 
       <div className='container d-flex justify-content-center'>
-        <Button style={{ color: 'white', marginBottom: "80px" }} variant="warning">Veiw All <i className="fa-solid fa-chevron-right"></i> </Button>
+        <Button style={{ color: 'white', marginBottom: "30px" }} variant="warning">Veiw All <i className="fa-solid fa-chevron-right"></i> </Button>
       </div>
 
       {/* Post Modal */}

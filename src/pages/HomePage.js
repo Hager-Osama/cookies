@@ -5,7 +5,7 @@ import '../index.css'
 
 import IconSectionData from '../component/iconSectionData'
 import ReactCardDate from '../component/ReactCardDate'
-import FlashDealsData from '../component/FlashDealsData'
+import FlashDealsData from '../component/flashDeals/FlashDealsData'
 import FeaturedData from '../component/Featured Restaurants/FeaturedData'
 import SearchFoodDate from '../component/SearchbyFood/SearchFoodDate'
 import Design from '../component/design/Design'
@@ -21,7 +21,7 @@ const HomePage = () => {
       <NavBar/>
       <Header1/>
       <FlashDealsData/>
-
+      
       <IconSectionData/>
       <ReactCardDate/>
       <FeaturedData/>

@@ -3,7 +3,8 @@ import FlashDeals from './FlashDealsDesgin'
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import { Modal, Form} from 'react-bootstrap';
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const FlashDealsData = () => {
   const [flashDealsData, setFlashDealsData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -60,6 +61,8 @@ const FlashDealsData = () => {
       formDataUpload)
       setFlashDealsData([...flashDealsData,response.data.result]);
       setShowForm(false);
+      toast.success("Card created successfully!"); // Show success toast message
+
     } catch (error) {
       console.log("erorr posting data:",error)
     }

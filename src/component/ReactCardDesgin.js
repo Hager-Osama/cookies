@@ -4,7 +4,7 @@ const ReactCardDesgin = ({image,title,price,location,onDelete,onEdit}) => {
   return (
     <div className='card2' >
     <div > 
-       <img src={image} style={{width:"100%"}}/> 
+       <img src={image}/> 
     </div>
     <div>
       <br/>

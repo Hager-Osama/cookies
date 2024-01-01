@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react'
 import DetailsCardDesign from './DetailsCardDesign'
 import axios from 'axios';
 import { Button, Modal, Form } from 'react-bootstrap';
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const DetailsCardData = () => {
   const [data,setData]=useState([]);
@@ -67,6 +68,8 @@ const DetailsCardData = () => {
 
       setData([...data, response.data.result]);
       setShowForm(false);
+      toast.success("Card created successfully!"); // Show success toast message
+
     } catch (error) {
       console.error('Error posting data:', error);
     }
