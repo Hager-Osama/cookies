@@ -170,7 +170,7 @@ const FeaturedData = () => {
       </div>
 
       {/* Post Modal */}
-      <Button style={{ marginLeft: "46%" }} onClick={() => setShowAddCardDialog(true)}>ADD NEW CARD</Button>
+      <Button onClick={() => setShowAddCardDialog(true)}>ADD NEW CARD</Button>
       <Modal show={showAddCardDialog} onHide={handleDialogClose}>
         <Modal.Header closeButton >
           <Modal.Title>Add New Card</Modal.Title>

@@ -223,7 +223,7 @@ const ReactCardDate = () => {
           </Modal.Body>
          </Modal>
       </Carousel>
-         <Button style={{ marginLeft: "46%" }} variant="success" onClick={handelPostData}> Add card</Button> 
+         <Button variant="success" onClick={handelPostData}> Add card</Button> 
    </Container>    
      
   )

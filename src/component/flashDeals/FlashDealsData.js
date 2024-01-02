@@ -89,7 +89,7 @@ const FlashDealsData = () => {
     <div className='d-flex flex-wrap justify-content-evenly container mt-5  '>
         {card}
     </div>
-    <Button style={{ marginLeft: "46%" }} onClick={handelPostData}>Add card</Button>
+    <Button onClick={handelPostData}>Add card</Button>
     {/* Form Modal */}
      <Modal show={showForm} onHide={handleCloseForm}>
           <Modal.Header closeButton>
