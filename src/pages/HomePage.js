@@ -3,7 +3,7 @@ import React from 'react'
 import Header1 from '../component/header'
 import '../index.css'
 
-import IconSectionData from '../component/iconSectionData'
+import IconSectionData from '../component/icons/iconSectionData'
 import ReactCardDate from '../component/ReactCardDate'
 import FlashDealsData from '../component/flashDeals/FlashDealsData'
 import FeaturedData from '../component/Featured Restaurants/FeaturedData'

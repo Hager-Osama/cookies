@@ -38,9 +38,10 @@ const FeaturedData = () => {
   const handleDelete = async (itemId) => {
     try {
       await axios.delete(`https://restaurant-project-drab.vercel.app/restaurant/deleteRestaurant/${itemId}`);
-      // After successful deletion, update the state to remove the deleted item
-      setData(data.filter(item => item._id !== itemId));
       toast.success("Card deleted successfully!"); // Show success deleted toast message
+        // Refetch data after deletion
+      const response = await axios.get("https://restaurant-project-drab.vercel.app/restaurant/getRestaurant");
+      setData(response.data.result);
     } catch (error) {
       console.error('Error deleting item:', error);
     }
@@ -113,8 +114,6 @@ const FeaturedData = () => {
     });
     setShowAddCardDialog(true);
   }
-
-
   const handleEditCard = async () => {
     const formDataBody = new FormData();
 
@@ -129,11 +128,11 @@ const FeaturedData = () => {
     try {
       const response = await axios.put(
         `https://restaurant-project-drab.vercel.app/restaurant/updateRestaurant/${newCardData.id}`, formDataBody);
-      // Update the data state after successful update
-      setData(data.map((item) => {
-        if (item._id === response.data.result._id) {
-          return response.data.result
-        }
+         // Update the data state after successful update
+        setData(data.map((item) => {
+          if (item._id === response.data.result._id) {
+            return response.data.result
+          }
         return item;
       }));
       setShowAddCardDialog(false); // Close the dialog

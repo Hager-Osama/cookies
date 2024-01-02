@@ -65,9 +65,10 @@ const ReactCardDate = () => {
   const handleDelete = async (itemId) => {
     try {
       await axios.delete(`https://restaurant-project-drab.vercel.app/popularItems/deletedPopularItems/${itemId}`);
-      //delete from memory***********************************************************
-      setApiData(apiData.filter(item => item._id !== itemId));
       toast.success("Card deleted successfully!"); // Show success toast message
+       // Refetch data after deletion
+       const response = await axios.get('https://restaurant-project-drab.vercel.app/PopularItems/getallPopularItems');
+       setApiData(response.data.result);
     } catch (error) {
       console.error('Error deleting item:', error);
     }

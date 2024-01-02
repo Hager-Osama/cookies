@@ -87,7 +87,6 @@ const SearchFoodDate = () => {
 
             <div className='d-flex flex-wrap justify-content-evenly container '>
                 {items}
-
                  {/* Form Modal */}
          <Modal show={showForm} onHide={handleCloseForm}>
           <Modal.Header closeButton>
