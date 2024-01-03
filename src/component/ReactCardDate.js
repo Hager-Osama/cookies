@@ -13,6 +13,8 @@ const ReactCardDate = () => {
   const [loading, setLoading] = useState(true);
   const [showForm ,setShowForm] = useState( false );
   const [formData, setFormData] =useState({});
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
+
  //PUT
  const openEditDialog =(card)=>{
   setFormData({
@@ -26,7 +28,7 @@ const ReactCardDate = () => {
   setShowForm(true);
  };
  const handleEditCard=async()=>{
-  
+  setLoadingSubmit(true);
   const formDataBody= new FormData();
   formDataBody.append("title",formData.title);
   formDataBody.append("item",formData.item);
@@ -45,6 +47,8 @@ const ReactCardDate = () => {
     notify("post updated!");
   } catch (error) {
     console.error('Error editing card:', error);
+  }finally {
+    setLoadingSubmit(false);
   }
  };
  //get 
@@ -101,6 +105,7 @@ const ReactCardDate = () => {
     });
   };
   const handleSubmitForm=async()=>{
+    setLoadingSubmit(true);
     try{
       const formDataUpload= new FormData();
       formDataUpload.append('title',formData.title);
@@ -114,7 +119,9 @@ const ReactCardDate = () => {
       notify("wow item created successfully!");
     }catch(error){
       console.error('Error posting data:', error);
-    }
+    }finally {
+    setLoadingSubmit(false);
+  }
   };
   //loading for response
   if (loading){
@@ -216,8 +223,8 @@ const ReactCardDate = () => {
               <Form.Label>location</Form.Label>
               <Form.Control type="text" name="place" value={formData.place} onChange={handleInputChange} required />
             </Form.Group>
-            <Button type="submit">
-              Submit
+            <Button type="submit" disabled={loadingSubmit}>
+              {loadingSubmit ? "Submitting..." : "Submit"}
             </Button>
           </Form>
           </Modal.Body>

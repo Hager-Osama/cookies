@@ -12,10 +12,10 @@ const SearchFoodDate = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showForm,setShowForm]=useState(false);
+    const [loadingSubmit,setLoadingSubmit]= useState(false);
     const [formData,setFormData]=useState({
         name:'',
-        foods:'',
-    })
+        foods:'', });
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -51,6 +51,7 @@ const SearchFoodDate = () => {
           });
     }
     const handleSubmitForm =async(e)=>{
+    setLoadingSubmit(true);
         e.preventDefault();
         try {
             const formDataUpload= new FormData();
@@ -61,9 +62,12 @@ const SearchFoodDate = () => {
             setData([...data,response.data.result]);
             setShowForm(false);
             toast.success("Card created successfully!"); // Show success toast message
+            setFormData({...formData})// Reset form fields
         } catch (error) {
           console.log("erorr posting data:",error)  
-        }
+        }finally {
+            setLoadingSubmit(false);
+          }
     }
 
     if (loading) {
@@ -87,6 +91,7 @@ const SearchFoodDate = () => {
 
             <div className='d-flex flex-wrap justify-content-evenly container '>
                 {items}
+
                  {/* Form Modal */}
          <Modal show={showForm} onHide={handleCloseForm}>
           <Modal.Header closeButton>
@@ -102,15 +107,15 @@ const SearchFoodDate = () => {
               <Form.Label>Title</Form.Label>
               <Form.Control type="text" name="name" value={formData.name} onChange={handleInputChange} required />
             </Form.Group>
-            <Button type="submit">
-              Submit
+            <Button type="submit" disabled={loadingSubmit}>
+                {loadingSubmit?"submitting...":"submit"}
             </Button>
           </Form>
           </Modal.Body>
          </Modal>
 
             </div>
-             <Button variant="success" onClick={handelPostData}> Add card</Button> 
+            <Button variant="success" onClick={handelPostData}> Add card</Button> 
         </div>
     )
 }

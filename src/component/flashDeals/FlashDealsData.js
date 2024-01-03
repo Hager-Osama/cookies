@@ -8,7 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 const FlashDealsData = () => {
   const [flashDealsData, setFlashDealsData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showForm,setShowForm]=useState(false)
+  const [loadingSubmit, setLoadingSubmit]=useState(false);
+  const [showForm,setShowForm]=useState(false);
   const [formData,setFormData]=useState({
     title:'',
     meal:null,
@@ -50,6 +51,7 @@ const FlashDealsData = () => {
     });
    };
    const handleSubmitForm =async(e)=>{
+    setLoadingSubmit(true);
     e.preventDefault();
     try {
       const formDataUpload=new FormData();
@@ -65,6 +67,8 @@ const FlashDealsData = () => {
 
     } catch (error) {
       console.log("erorr posting data:",error)
+    }finally{
+      setLoadingSubmit(false)
     }
    }
 
@@ -113,8 +117,8 @@ const FlashDealsData = () => {
               <Form.Label>Expired</Form.Label>
               <Form.Control type="text" name="expired" value={formData.expired} onChange={handleInputChange} required />
             </Form.Group>
-            <Button type="submit">
-              Submit
+            <Button type="submit" disabled={loadingSubmit}>
+              { loadingSubmit?"submitting":"submit"}
             </Button>
           </Form>
           </Modal.Body>

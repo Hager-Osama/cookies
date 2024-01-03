@@ -9,6 +9,7 @@ import Form from 'react-bootstrap/Form';
 const FeaturedData = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingSubmit,setLoadingSubmit]= useState(false);
   //for post request and dialog
   const [showAddCardDialog, setShowAddCardDialog] = useState(false); // State for dialog
   const [newCardData, setNewCardData] = useState({
@@ -49,6 +50,7 @@ const FeaturedData = () => {
   /*end delete */
   /* POST */
   const handleAddCard = async () => {
+    setLoadingSubmit(true);
     try {
       const formDataBody = new FormData();
 
@@ -71,7 +73,9 @@ const FeaturedData = () => {
       });
     } catch (error) {
       console.error('Error adding card:', error);
-    }
+    }finally {
+    setLoadingSubmit(false);
+     }
   };
   const handleDialogClose = () => {
     setShowAddCardDialog(false);
@@ -93,7 +97,6 @@ const FeaturedData = () => {
   const handleLogoChange = (event) => {
     setNewCardData({ ...newCardData, logo: event.target.files[0] });
   };
-
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setNewCardData({ ...newCardData, [name]: value }); // update specific field
@@ -115,6 +118,8 @@ const FeaturedData = () => {
     setShowAddCardDialog(true);
   }
   const handleEditCard = async () => {
+    setLoadingSubmit(true);
+
     const formDataBody = new FormData();
 
     formDataBody.append('name', newCardData.name);
@@ -139,6 +144,8 @@ const FeaturedData = () => {
       toast.success("Card updated successfully!"); // Show update toast message
     } catch (error) {
       console.error('Error editing card:', error);
+    }finally {
+      setLoadingSubmit(false);
     }
   };
   /* End PUT */
@@ -167,10 +174,10 @@ const FeaturedData = () => {
 
       <div className='container d-flex justify-content-center'>
         <Button style={{ color: 'white', marginBottom: "30px" }} variant="warning">Veiw All <i className="fa-solid fa-chevron-right"></i> </Button>
+        <Button  onClick={() => setShowAddCardDialog(true)}>ADD NEW CARD</Button>
       </div>
 
       {/* Post Modal */}
-      <Button onClick={() => setShowAddCardDialog(true)}>ADD NEW CARD</Button>
       <Modal show={showAddCardDialog} onHide={handleDialogClose}>
         <Modal.Header closeButton >
           <Modal.Title>Add New Card</Modal.Title>
@@ -219,12 +226,11 @@ const FeaturedData = () => {
               {newCardData.logoUrl === undefined ? null : <img src={newCardData.logoUrl} style={{ width: '100px', height: '100px' }} />}
               <Form.Control type="file" onChange={handleLogoChange} required={newCardData.id === undefined} />
             </Form.Group>
-            <Button variant="primary" type="submit">
-              Submit
+            <Button type="submit" disabled={loadingSubmit}>
+              {loadingSubmit? "Submitting..." : "Submit"}
             </Button>
           </Form>
         </Modal.Body>
-
       </Modal>
     </>
   )

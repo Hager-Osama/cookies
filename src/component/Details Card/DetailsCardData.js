@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const DetailsCardData = () => {
   const [data,setData]=useState([]);
   const [loading,setLoading]=useState(false);
+  const [loadingSubmit,setLoadingSubmit]=useState(false);
   /*post */
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
@@ -56,6 +57,7 @@ const DetailsCardData = () => {
     });
   };
   const handleSubmitForm = async (e) => {
+    setLoadingSubmit(true);
     e.preventDefault();
     try {
       const formDataUpload = new FormData();
@@ -72,6 +74,8 @@ const DetailsCardData = () => {
 
     } catch (error) {
       console.error('Error posting data:', error);
+    }finally{
+      setLoadingSubmit(false);
     }
   };
 
@@ -135,8 +139,8 @@ const DetailsCardData = () => {
               <Form.Label>Description</Form.Label>
               <Form.Control as="textarea" name="description" value={formData.description} onChange={handleInputChange} required />
             </Form.Group>
-            <Button variant="primary" type="submit">
-              Submit
+            <Button  type="submit" disabled={loadingSubmit}>
+              {loadingSubmit? 'submiting...':'submit'}
             </Button>
           </Form>
         </Modal.Body>
@@ -144,5 +148,4 @@ const DetailsCardData = () => {
     </div>
   )
 }
-
 export default DetailsCardData;
