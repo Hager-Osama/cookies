@@ -1,27 +1,10 @@
 body{
     margin:0px ;
-    padding: 0px;
-}
-.logo img{
-    padding-right: 5px;
-}
-.logo{
-    font-weight:bold;
-}
-
- .edit button{
-    color:#FFB30E  ;
-    background-color: transparent;
-    border: none  ;
-    box-shadow: 0px 0px 6px #cdc2ac;
-    border-radius: 5px;
-    padding: 2px 12px ;
-    margin-left: 15px;
+    padding:0px;
 }
 /*start header*/
 .app__header{
     background:url("../src/images/Group1.png") center center/cover ;
-  
 }
 .app-left{   
      margin-top: 12%;
@@ -264,8 +247,9 @@ body{
 /*start last*/
 .ParentLast{
    background: url("../src/images/LightiPhonew/Image.png")center  ;
-   padding: 6%;
+   padding:5%;
    color:white;
+   background-repeat: no-repeat ;
 }
 .ParentLast .btnn{
    background-color: #F75C0B; 

@@ -1,10 +1,18 @@
 import HomePage from './pages/HomePage.js';
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import LoginPage from './pages/auth/loginPage.js';
+import RegisterPage from './pages/auth/registerPage.js';
 
 function App() {
   return (
     <div className="App">
-      <HomePage/>
+      <BrowserRouter>
+      <Routes>
+        <Route index element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage/>}/>
+      </Routes>
+    </BrowserRouter>
     </div>
   );
 }
