@@ -2,48 +2,42 @@ import { useState } from "react";
 import { Col, Row, Container } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Link } from "react-router-dom";
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const RegisterPage = () => {
   const [loadingSubmit, setLoadingSubmit] = useState(false);
-  const [data,setData]=useState([]);
-  const [formData, setFormData] = useState({
-    userName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmitForm = async (e) => {
     setLoadingSubmit(true);
     e.preventDefault();
-    try {
-      const formDataUpload = new FormData();
-      formDataUpload.append("userName", formData.userName);
-      formDataUpload.append("email", formData.email);
-      formDataUpload.append("password", formData.password);
-      formDataUpload.append("confirmPassword", formData.confirmPassword);
+    let regobj = { userName, email, password, confirmPassword };
 
+    // console.log(regobj);
+    try {
       const response = await axios.post(
         "https://restaurant-project-drab.vercel.app/auth/register",
-        formDataUpload
+        regobj, // Pass regobj in the request body
+        { headers: { "Content-Type": "application/json" } }
       );
-
-      setData([...data, response.data.result]);
-
-      toast.success("Card created successfully!"); // Show success toast message
+      toast.success(" Registered successfully!");
+      navigate("/login");
+      // Reset form after successful registration
+      setUserName("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
     } catch (error) {
-      console.error("Error posting data:", error);
+      console.error("Error Registered:", error.message);
+      console.error("Error Details:", error.response.data.msgError);
+      toast.error("Error Details: " + error.response.data.msgError);
     } finally {
       setLoadingSubmit(false);
     }
@@ -60,44 +54,52 @@ const RegisterPage = () => {
                 type="text"
                 autoComplete="off"
                 placeholder="User Name"
-                onChange={handleInputChange}
-                value={formData.userName}
+                onChange={(e) => setUserName(e.target.value)}
+                value={userName}
+                required
               />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control
+                pattern="[^@\s]+@[^@\s]+\.[a-zA-Z]{2,}"
                 type="email"
                 placeholder="Enter email"
-                onChange={handleInputChange}
-                value={formData.email}
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                required
               />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control
+                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                 type="password"
                 placeholder="Password"
-                onChange={handleInputChange}
-                value={formData.password}
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                required
               />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Confirm Password</Form.Label>
               <Form.Control
+                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                 type="password"
                 placeholder="Confirm Password"
-                onChange={handleInputChange}
-                value={formData.confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                value={confirmPassword}
+                required
               />
             </Form.Group>
 
             <Button variant="primary" type="submit" disabled={loadingSubmit}>
-              {loadingSubmit? 'submiting...':'submit'}
-              Register your Account
+              {loadingSubmit ? " Registering..." : " Register"}
             </Button>
 
             <Form.Group className="mt-2">
