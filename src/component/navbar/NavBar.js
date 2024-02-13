@@ -31,7 +31,7 @@ const NavBar = () => {
               className="nav-text d-flex mt-3 justify-content-center"
               style={{ color: "#f17228" }}
             >
-              <i class="fa-solid fa-user"></i>
+              <i className="fa-solid fa-user"></i>
               <p>login</p>
             </Nav.Link>
             <Nav.Link
@@ -39,7 +39,7 @@ const NavBar = () => {
               className="nav-text d-flex mt-3 justify-content-center"
               style={{ color: "#f17228" }}
             >
-              <i class="fa-solid fa-cart-shopping"></i>
+              <i className="fa-solid fa-cart-shopping"></i>
               <p>cart</p>
             </Nav.Link>
           </Nav>

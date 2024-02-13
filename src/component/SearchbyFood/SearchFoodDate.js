@@ -1,123 +1,136 @@
-
-import React, { useEffect, useState } from 'react'
-import SearchFoodDesgin from './SearchFoodDesgin'
-import axios from 'axios';
-import { Button } from 'react-bootstrap';
-import { Modal, Form} from 'react-bootstrap';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useEffect, useState } from "react";
+import SearchFoodDesgin from "./SearchFoodDesgin";
+import axios from "axios";
+import { Button } from "react-bootstrap";
+import { Modal, Form } from "react-bootstrap";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SearchFoodDate = () => {
-
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [showForm,setShowForm]=useState(false);
-    const [loadingSubmit,setLoadingSubmit]= useState(false);
-    const [formData,setFormData]=useState({
-        name:'',
-        foods:'', });
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get("https://restaurant-project-drab.vercel.app/food/getallFood")
-                setData(response.data.result)
-            } catch (error) {
-                console.log('errrrrorrrr', error)
-            } finally {
-                setLoading(false)
-            }
-        };
-        fetchData();
-    }, [])
-     //POST
-     const handelPostData =async()=>{
-        setShowForm(true)
-     };
-     const handleCloseForm =()=>{
-        setShowForm(false)
-     };
-     const handleInputChange=(e)=>{
-       const {name,value}=e.target;
-       setFormData({
-        ...formData,
-        [name]:value
-       });
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    foods: "",
+  });
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://restaurant-project-drab.vercel.app/food/getallFood"
+        );
+        setData(response.data.result);
+      } catch (error) {
+        console.log("errrrrorrrr", error);
+      } finally {
+        setLoading(false);
+      }
     };
-    const handleFileChange=(e)=>{
-        const file=e.target.files[0];
-        setFormData({
-            ...formData,
-            foods:file,
-          });
-    }
-    const handleSubmitForm =async(e)=>{
+    fetchData();
+  }, []);
+  //POST
+  const handelPostData = async () => {
+    setShowForm(true);
+  };
+  const handleCloseForm = () => {
+    setShowForm(false);
+  };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setFormData({
+      ...formData,
+      foods: file,
+    });
+  };
+  const handleSubmitForm = async (e) => {
     setLoadingSubmit(true);
-        e.preventDefault();
-        try {
-            const formDataUpload= new FormData();
-            formDataUpload.append('name',formData.name);
-            formDataUpload.append('foods',formData.foods);
-            const response=await axios.post("https://restaurant-project-drab.vercel.app/food/searchFood"
-            ,formDataUpload) 
-            setData([...data,response.data.result]);
-            setShowForm(false);
-            toast.success("Card created successfully!"); // Show success toast message
-            setFormData({...formData})// Reset form fields
-        } catch (error) {
-          console.log("erorr posting data:",error)  
-        }finally {
-            setLoadingSubmit(false);
-          }
+    e.preventDefault();
+    try {
+      const formDataUpload = new FormData();
+      formDataUpload.append("name", formData.name);
+      formDataUpload.append("foods", formData.foods);
+      const response = await axios.post(
+        "https://restaurant-project-drab.vercel.app/food/searchFood",
+        formDataUpload
+      );
+      setData([...data, response.data.result]);
+      setShowForm(false);
+      toast.success("Card created successfully!"); // Show success toast message
+      setFormData({ ...formData }); // Reset form fields
+    } catch (error) {
+      console.log("erorr posting data:", error);
+    } finally {
+      setLoadingSubmit(false);
     }
+  };
 
-    if (loading) {
-        return (<h3>loading.........</h3>)
-    }
-    const items = data.map((d) => (
-        <SearchFoodDesgin
-            key={d._id}
-            imageFood={d.image.url}
-            title={d.name}
-        />
-    ))
+  if (loading) {
+    return <h3>loading.........</h3>;
+  }
+  const items = data.map((d) => (
+    <SearchFoodDesgin key={d._id} imageFood={d.image.url} title={d.name} />
+  ));
 
-    return (
-        <div style={{ backgroundColor: "#FEFAF1", padding: "82px 0px" }}>
-            <div className='container d-flex justify-content-center'>
-                <div className='textFood'>
-                    <h1 style={{ marginBottom: "80px" }}>Search by Food</h1>
-                </div>
-            </div>
+  return (
+    <div style={{ backgroundColor: "#FEFAF1", padding: "82px 0px" }}>
+      <div className="container d-flex justify-content-center">
+        <div className="textFood">
+          <h1 style={{ marginBottom: "80px" }}>Search by Food</h1>
+        </div>
+      </div>
 
-            <div className='d-flex flex-wrap justify-content-evenly container '>
-                {items}
+      <div className="d-flex flex-wrap justify-content-evenly container ">
+        {items}
 
-                 {/* Form Modal */}
-         <Modal show={showForm} onHide={handleCloseForm}>
+        {/* Form Modal */}
+        <Modal show={showForm} onHide={handleCloseForm}>
           <Modal.Header closeButton>
-          <Modal.Title>Add New Card</Modal.Title>
+            <Modal.Title>Add New Card</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-          <Form onSubmit={handleSubmitForm}>
-            <Form.Group controlId="formImage">
-              <Form.Label>Image</Form.Label>
-              <Form.Control type="file" name="foode" accept="image/*" onChange={handleFileChange} required />
-            </Form.Group>
-            <Form.Group controlId="formTitle">
-              <Form.Label>Title</Form.Label>
-              <Form.Control type="text" name="name" value={formData.name} onChange={handleInputChange} required />
-            </Form.Group>
-            <Button type="submit" disabled={loadingSubmit}>
-                {loadingSubmit?"submitting...":"submit"}
-            </Button>
-          </Form>
+            <Form onSubmit={handleSubmitForm}>
+              <Form.Group controlId="formImage">
+                <Form.Label>Image</Form.Label>
+                <Form.Control
+                  type="file"
+                  name="foode"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="formTitle">
+                <Form.Label>Title</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                />
+              </Form.Group>
+              <Button type="submit" disabled={loadingSubmit}>
+                {loadingSubmit ? "submitting..." : "submit"}
+              </Button>
+            </Form>
           </Modal.Body>
-         </Modal>
-
-            </div>
-            <Button variant="success" onClick={handelPostData}> Add card</Button> 
-        </div>
-    )
-}
+        </Modal>
+      </div>
+      <Button variant="success" onClick={handelPostData}>
+        {" "}
+        Add card
+      </Button>
+    </div>
+  );
+};
 
 export default SearchFoodDate;
