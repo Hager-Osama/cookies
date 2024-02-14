@@ -111,8 +111,18 @@ const LoginPage = () => {
             <Button variant="primary" type="submit">
               Submit
             </Button>
-
             <Form.Group className="mt-2">
+              <Form.Label>
+                
+                <Link to="/forgotpassword" style={{ textDecoration: "none" }}>
+                
+                  <span style={{ cursor: "pointer" }} className="text-primary">
+                   forget password ?!
+                  </span>
+                </Link>
+              </Form.Label>
+            </Form.Group>
+            <Form.Group className="mt-1">
               <Form.Label>
                 Don't have an account?{" "}
                 <Link to="/register" style={{ textDecoration: "none" }}>
