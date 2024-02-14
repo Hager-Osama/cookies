@@ -13,7 +13,6 @@ class AuthLocalUtils {
   static getToken() {
     return AuthLocalUtils.getLoginData().token;
   }
-
 }
 
 export default AuthLocalUtils;

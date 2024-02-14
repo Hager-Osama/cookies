@@ -1,18 +1,13 @@
 import React from "react";
-import { Container, Nav, FormControl } from "react-bootstrap";
+import { Container, Nav, FormControl, Button } from "react-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
 import MaskGroup from "../../images/MaskGroup.png";
-import "./NavBar.css"
+import "./NavBar.css";
 import AuthLocalUtils from "../../pages/local_utils";
-
 const NavBar = () => {
-  let user = AuthLocalUtils.getLoginData();
+  const user = AuthLocalUtils.getLoginData();
   return (
-    <Navbar
-      className="sticky-top "
-
-      expand="sm"
-    >
+    <Navbar className="sticky-top " expand="sm">
       <Container>
         <Navbar.Brand>
           <a href="/">
@@ -58,7 +53,11 @@ const NavBar = () => {
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
-
+        {user !== null ? (
+          <Button type="text" onClick={() => {}}>
+            logout
+          </Button>
+        ) : null}
       </Container>
     </Navbar>
   );
