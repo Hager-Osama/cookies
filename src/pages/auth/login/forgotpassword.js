@@ -6,44 +6,40 @@ import "./style.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const Forgotpassword = () => {
-    const navigate=useNavigate();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
-
-
-
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const response = await axios.patch("https://restaurant-project-drab.vercel.app/auth/forgetCode", {
+      const response = await axios.patch(
+        "https://restaurant-project-drab.vercel.app/auth/forgetCode",
+        {
           email: email,
-        });
-  
-        const { success, message, data } = response.data;
-  
-        if (success) {
-          const resetToken = data.token;
-  
-          // Now you can navigate the user to a new page to reset the password
-          // Example: window.location.href = `/reset-password?token=${resetToken}`;
-          navigate('/Resetpassword')
-          // Update the message state to display a success message
-          setMessage(message);
-        } else {
-          // Update the message state to display an error message
-          setMessage(message);
         }
-      } catch (error) {
-        console.error("Error submitting email:", error);
-        // Update the message state to display an error message
-        setMessage("An error occurred while submitting your email. Please try again.");
+      );
+
+      const { success, message, data } = response.data;
+
+      if (success) {
+        const resetToken = data.token;
+
+    
+        navigate("/Resetpassword");
+
+        setMessage(message);
+      } else {
+
+        setMessage(message);
       }
-   
+    } catch (error) {
+      console.error("Error submitting email:", error);
+      setMessage(
+        "An error occurred while submitting your email. Please try again."
+      );
+    }
   };
-
-
-
 
   return (
     <div className="bg">
