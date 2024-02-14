@@ -1,0 +1,12 @@
+{
+    "success": true,
+    "status": 200,
+    "message": "login success",
+    "data": {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Y2I0NWNkYTJkMjJiNmZiN2QxZGUxYSIsImVtYWlsIjoiaGFnZXJlbHNoYTNlckBnbWFpbC5jb20iLCJpYXQiOjE3MDc5MTU5NDZ9.KP39nHCo1g76WDCSZd8f-Kn9VJdRDF4-TWEgj5wazps",
+        "user": {
+            "userName": "Hager",
+            "email": "hagerelsha3er@gmail.com"
+        }
+    }
+}
