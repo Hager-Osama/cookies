@@ -3,8 +3,10 @@ import { Col, Row, Container } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "./style.css";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../../api/API";
+import { toast } from "react-toastify";
+
 const Forgotpassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -13,31 +15,24 @@ const Forgotpassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.patch(
-        "https://restaurant-project-drab.vercel.app/auth/forgetCode",
-        {
-          email: email,
-        }
-      );
+      const response = await axiosInstance.patch("/auth/forgetCode", {
+        email: email,
+      });
 
-      const { success, message, data } = response.data;
+      const { success, data } = response.data;
 
       if (success) {
         const resetToken = data.token;
 
-    
-        navigate("/Resetpassword");
+        navigate("/Resetpassword", {
+          state: {
+            token: resetToken,
+          },
+        });
 
-        setMessage(message);
-      } else {
-
-        setMessage(message);
       }
     } catch (error) {
-      console.error("Error submitting email:", error);
-      setMessage(
-        "An error occurred while submitting your email. Please try again."
-      );
+      toast.error(error.response.data.msgError);
     }
   };
 

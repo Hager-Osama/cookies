@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Nav, FormControl, Button } from "react-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
 import MaskGroup from "../../images/MaskGroup.png";
 import "./NavBar.css";
 import AuthLocalUtils from "../../pages/local_utils";
 const NavBar = () => {
-  const user = AuthLocalUtils.getLoginData();
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const currentLocalUser = AuthLocalUtils.getLoginData();
+    setUser(currentLocalUser);
+  }, [null]);
   return (
     <Navbar className="sticky-top " expand="sm">
       <Container>
@@ -31,7 +35,7 @@ const NavBar = () => {
                 style={{ color: "#f17228" }}
               >
                 <i className="fa-solid fa-user"></i>
-                <p>Profile</p>
+                <p>{user.userName}</p>
               </Nav.Link>
             ) : (
               <Nav.Link
@@ -54,7 +58,13 @@ const NavBar = () => {
           </Nav>
         </Navbar.Collapse>
         {user !== null ? (
-          <Button type="text" onClick={() => {}}>
+          <Button
+            type="text"
+            onClick={() => {
+              AuthLocalUtils.deleteLoginData();
+              setUser(null);
+            }}
+          >
             logout
           </Button>
         ) : null}

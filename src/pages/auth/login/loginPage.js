@@ -26,16 +26,12 @@ const LoginPage = () => {
     e.preventDefault();
     if (validate()) {
       try {
-        const response = await axiosInstance.post(
-          "/auth/login",
-          {
-            email,
-            password,
-          }
-        );
+        const response = await axiosInstance.post("/auth/login", {
+          email,
+          password,
+        });
         // Handle the response
-        const { success, data } = response.data;
-
+        const { success } = response.data;
         if (success) {
           toast.success(" Login successfully!");
           AuthLocalUtils.saveLoginData(response.data.data);
@@ -58,7 +54,7 @@ const LoginPage = () => {
 
   return (
     <div className="bg">
-      <Container >
+      <Container>
         <Row>
           <Col>
             <div className="box">
@@ -114,10 +110,14 @@ const LoginPage = () => {
                 </Button>
                 <Form.Group className="mt-2">
                   <Form.Label>
-
-                    <Link to="/forgotpassword" style={{ textDecoration: "none" }}>
-
-                      <span style={{ cursor: "pointer" }} className="text-primary">
+                    <Link
+                      to="/forgotpassword"
+                      style={{ textDecoration: "none" }}
+                    >
+                      <span
+                        style={{ cursor: "pointer" }}
+                        className="text-primary"
+                      >
                         forget password ?!
                       </span>
                     </Link>
@@ -128,7 +128,10 @@ const LoginPage = () => {
                     Don't have an account?{" "}
                     <Link to="/register" style={{ textDecoration: "none" }}>
                       {" "}
-                      <span style={{ cursor: "pointer" }} className="text-danger">
+                      <span
+                        style={{ cursor: "pointer" }}
+                        className="text-danger"
+                      >
                         register
                       </span>
                     </Link>
