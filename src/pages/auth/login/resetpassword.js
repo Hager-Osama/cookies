@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import { Col, Row, Container } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios from "axios";
 import "./style.css";
 import axiosInstance from "../../../api/API";
 
@@ -18,35 +16,46 @@ const Resetpassword = () => {
   const [passwordMatchError, setPasswordMatchError] = useState(false);
   const submitForm = async (e) => {
     e.preventDefault();
+
+    if (!password || !confirmPassword) {
+      toast.error("Both Password and Confirm Password are required.");
+      return;
+    }
+    // Check if passwords match
     if (password !== confirmPassword) {
       setPasswordMatchError(true);
-      setLoadingSubmit(false);
+      toast.error("Passwords do not match.");
       return;
     }
     // Reset password match error state
     setPasswordMatchError(false);
+
+
+    
     try {
       if (loadingSubmit) return;
       setLoadingSubmit(true);
       const response = await axiosInstance.patch(
         "/auth/resetPassword",
-        {},
+        {password ,confirmPassword},
         {
           headers: {
             token: localStorage.getItem("resetToken"),
           },
         }
       );
-      const { success } = response.data;
+      const { success ,message} = response.data;
       if (success) {
-        toast.success(response.data.message);
+        toast.success(message);
         navigate("/login");
       }
-    } catch (response) {
-      toast.error(response.data.msgError);
+    } catch (error) {
+      toast.error(error.response.data.msgError);
     }
     setLoadingSubmit(false);
   };
+
+
 
   return (
     <div className="bg">

@@ -25,7 +25,7 @@ const Forgotpassword = () => {
         email: email,
       });
 
-      const { success, data, message, msgError } = response.data;
+      const { success, data, message } = response.data;
       console.log("Success:", success);
       console.log("Data:", data);
       if (success) {
@@ -33,7 +33,6 @@ const Forgotpassword = () => {
         setMessage(message);
         localStorage.setItem("resetToken", data.token);
         toast.success(message);
-      } else {
       }
     } catch (error) {
       setMessage(error.response.data.msgError);
@@ -44,6 +43,8 @@ const Forgotpassword = () => {
   };
 
   const handleVerificationCodeEntered = async () => {
+    if (loading) return;
+    setLoading(true);
     if (isVerifiyingCode) return;
     setIsVerifiyingCode(true);
     try {
@@ -69,6 +70,7 @@ const Forgotpassword = () => {
       toast.error(error.response.data.msgError);
     } finally {
       setIsVerifiyingCode(false);
+      setLoading(false);
     }
   };
   return (
@@ -111,7 +113,7 @@ const Forgotpassword = () => {
                     <Button
                       variant="primary"
                       onClick={handleVerificationCodeEntered}
-                    >
+                    > 
                       Verify Code
                     </Button>
                   </>
