@@ -16,6 +16,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     // Check if there is a token in localStorage, if so, navigate to Home
     const token = localStorage.getItem("token");
@@ -24,6 +25,8 @@ const LoginPage = () => {
   }, [navigate]);
   const handleLogin = async (e) => {
     e.preventDefault();
+    if (isLoading) return;
+    setIsLoading(true);
     if (validate()) {
       try {
         const response = await axiosInstance.post("/auth/login", {
@@ -41,6 +44,7 @@ const LoginPage = () => {
         console.error("Login failed:", error.message);
         toast.error("Login failed" + error.response.data.msgError);
       }
+      setIsLoading(false);
     }
   };
   const validate = () => {

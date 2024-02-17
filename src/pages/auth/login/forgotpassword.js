@@ -14,9 +14,11 @@ const Forgotpassword = () => {
   const [message, setMessage] = useState("");
   const [verificationCodeSent, setVerificationCodeSent] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isVerifiyingCode, setIsVerifiyingCode] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
     setLoading(true); // Set loading to true when the form is submitted
     try {
       const response = await axiosInstance.patch("/auth/sendVerifyCode", {
@@ -30,37 +32,43 @@ const Forgotpassword = () => {
         setVerificationCodeSent(true);
         setMessage(message);
         localStorage.setItem("resetToken", data.token);
-        toast.success(message); 
+        toast.success(message);
       } else {
-        setMessage(msgError);
       }
     } catch (error) {
+      setMessage(error.response.data.msgError);
       toast.error(error.response.data.msgError);
-    }  finally {
+    } finally {
       setLoading(false); // Set loading back to false after the API request is completed
     }
   };
 
   const handleVerificationCodeEntered = async () => {
+    if (isVerifiyingCode) return;
+    setIsVerifiyingCode(true);
     try {
       // Send the entered verification code to the server for validation
-      const response = await axiosInstance.post("auth/VerifyCode", {
-        token: localStorage.getItem("resetToken"),
-        verificationCode: verificationCode,
-      });
+      const response = await axiosInstance.post(
+        "/auth/VerifyCode",
+        {
+          forgetCode: verificationCode,
+        },
+        {
+          headers: {
+            token: localStorage.getItem("resetToken"),
+          },
+        }
+      );
 
-      const { success, msgError } = response.data;
+      const { success } = response.data;
       if (success) {
-          
-        navigate("/Resetpassword", {
-          state: { token: localStorage.getItem("resetToken") },
-        });
-      } else {
-        setMessage(msgError);
-        toast.error(msgError); 
+        navigate("/resetpassword");
       }
     } catch (error) {
+      setMessage(error.response.data.msgError);
       toast.error(error.response.data.msgError);
+    } finally {
+      setIsVerifiyingCode(false);
     }
   };
   return (
@@ -84,7 +92,7 @@ const Forgotpassword = () => {
                   />
                 </Form.Group>
                 <Button variant="primary" type="submit">
-                {loading ? "Sending..." : "Submit"}
+                  {loading ? "Sending..." : "Submit"}
                 </Button>
                 {verificationCodeSent && (
                   <>
@@ -92,13 +100,14 @@ const Forgotpassword = () => {
                       Verification code sent. Check your email and enter the
                       code below:
                     </p>
-               
+
                     <Form.Control
                       type="text"
                       placeholder="Enter verification code"
                       value={verificationCode}
                       onChange={(e) => setVerificationCode(e.target.value)}
                     />
+                    <br />
                     <Button
                       variant="primary"
                       onClick={handleVerificationCodeEntered}

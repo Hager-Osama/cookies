@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import "./style.css";
+import axiosInstance from "../../../api/API";
 
 const Resetpassword = () => {
   const [loadingSubmit, setLoadingSubmit] = useState(false);
@@ -15,10 +16,8 @@ const Resetpassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const [passwordMatchError, setPasswordMatchError] = useState(false);
-  const location = useLocation();
 
   const submitForm = async (e) => {
-
     e.preventDefault();
     if (password !== confirmPassword) {
       setPasswordMatchError(true);
@@ -30,13 +29,12 @@ const Resetpassword = () => {
     try {
       if (loadingSubmit) return;
       setLoadingSubmit(true);
-      const response = await axios.patch(
+      const response = await axiosInstance.patch(
         "/auth/resetPassword",
         {},
         {
           headers: {
-            "Content-Type": "application/json",
-            token: location.state.token,
+            token: localStorage.getItem("resetToken"),
           },
         }
       );
