@@ -19,6 +19,7 @@ const Forgotpassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (loading) return;
+    setVerificationCodeSent(false);
     setLoading(true); // Set loading to true when the form is submitted
     try {
       const response = await axiosInstance.patch("/auth/sendVerifyCode", {
@@ -43,8 +44,6 @@ const Forgotpassword = () => {
   };
 
   const handleVerificationCodeEntered = async () => {
-    if (loading) return;
-    setLoading(true);
     if (isVerifiyingCode) return;
     setIsVerifiyingCode(true);
     try {
@@ -70,7 +69,6 @@ const Forgotpassword = () => {
       toast.error(error.response.data.msgError);
     } finally {
       setIsVerifiyingCode(false);
-      setLoading(false);
     }
   };
   return (
@@ -113,8 +111,8 @@ const Forgotpassword = () => {
                     <Button
                       variant="primary"
                       onClick={handleVerificationCodeEntered}
-                    > 
-                      Verify Code
+                    >
+                      {isVerifiyingCode ? "Verifying..." : "Verify"}
                     </Button>
                   </>
                 )}
