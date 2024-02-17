@@ -30,21 +30,19 @@ const Resetpassword = () => {
     // Reset password match error state
     setPasswordMatchError(false);
 
-
-    
     try {
       if (loadingSubmit) return;
       setLoadingSubmit(true);
       const response = await axiosInstance.patch(
         "/auth/resetPassword",
-        {password ,confirmPassword},
+        { password, confirmPassword },
         {
           headers: {
             token: localStorage.getItem("resetToken"),
           },
         }
       );
-      const { success ,message} = response.data;
+      const { success, message } = response.data;
       if (success) {
         toast.success(message);
         navigate("/login");
@@ -54,8 +52,6 @@ const Resetpassword = () => {
     }
     setLoadingSubmit(false);
   };
-
-
 
   return (
     <div className="bg">
@@ -110,9 +106,9 @@ const Resetpassword = () => {
                       onClick={() => setShowPassword(!showPassword)}
                     >
                       {showPassword ? (
-                        <i className="fa-regular fa-eye-slash"></i>
-                      ) : (
                         <i className="fa-regular fa-eye"></i>
+                      ) : (
+                        <i className="fa-regular fa-eye-slash"></i>
                       )}
                     </div>
                   </div>

@@ -96,9 +96,9 @@ const Forgotpassword = () => {
                 </Button>
                 {verificationCodeSent && (
                   <>
-                    <p>
+                    <p className="text-primary mt-3">
                       Verification code sent. Check your email and enter the
-                      code below:
+                      code below :
                     </p>
 
                     <Form.Control

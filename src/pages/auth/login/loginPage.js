@@ -94,9 +94,10 @@ const LoginPage = () => {
                       onClick={() => setShowPassword(!showPassword)}
                     >
                       {showPassword ? (
-                        <i className="fa-regular fa-eye-slash"></i>
-                      ) : (
+                        
                         <i className="fa-regular fa-eye"></i>
+                      ) : (
+                        <i className="fa-regular fa-eye-slash"></i>
                       )}
                     </div>
                   </div>
