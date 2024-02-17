@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import "./style.css";
 import axiosInstance from "../../../api/API";
-import AppRoute from "../../routes";
 
 const Resetpassword = () => {
   const [loadingSubmit, setLoadingSubmit] = useState(false);
@@ -41,10 +40,10 @@ const Resetpassword = () => {
       const { success } = response.data;
       if (success) {
         toast.success(response.data.message);
-        navigate(AppRoute.login);
+        navigate("/login");
       }
-    } catch (e) {
-      toast.error(e.data.msgError);
+    } catch (response) {
+      toast.error(response.data.msgError);
     }
     setLoadingSubmit(false);
   };
