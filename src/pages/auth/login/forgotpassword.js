@@ -48,7 +48,7 @@ const Forgotpassword = () => {
     setIsVerifiyingCode(true);
     try {
       // Send the entered verification code to the server for validation
-      const response = await axiosInstance.post(
+      const response = await axiosInstance.patch(
         "/auth/VerifyCode",
         {
           forgetCode: verificationCode,

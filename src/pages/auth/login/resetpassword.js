@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import "./style.css";
 import axiosInstance from "../../../api/API";
+import AppRoute from "../../routes";
 
 const Resetpassword = () => {
   const [loadingSubmit, setLoadingSubmit] = useState(false);
@@ -16,7 +17,6 @@ const Resetpassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const [passwordMatchError, setPasswordMatchError] = useState(false);
-
   const submitForm = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
@@ -38,10 +38,10 @@ const Resetpassword = () => {
           },
         }
       );
-      const { success, message } = response.data;
+      const { success } = response.data;
       if (success) {
         toast.success(response.data.message);
-        navigate("/login");
+        navigate(AppRoute.login);
       }
     } catch (e) {
       toast.error(e.data.msgError);
