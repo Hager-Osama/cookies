@@ -10,33 +10,59 @@ import { toast } from "react-toastify";
 const Forgotpassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [verificationCode, setVerificationCode] = useState("");
   const [message, setMessage] = useState("");
+  const [verificationCodeSent, setVerificationCodeSent] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading to true when the form is submitted
     try {
-      const response = await axiosInstance.patch("/auth/forgetCode", {
+      const response = await axiosInstance.patch("/auth/sendVerifyCode", {
         email: email,
       });
 
-      const { success, data } = response.data;
-
+      const { success, data, message, msgError } = response.data;
+      console.log("Success:", success);
+      console.log("Data:", data);
       if (success) {
-        const resetToken = data.token;
-
-    
-        navigate("/Resetpassword");
-
+        setVerificationCodeSent(true);
         setMessage(message);
+        localStorage.setItem("resetToken", data.token);
+        toast.success(message); 
       } else {
+        setMessage(msgError);
+      }
+    } catch (error) {
+      toast.error(error.response.data.msgError);
+    }  finally {
+      setLoading(false); // Set loading back to false after the API request is completed
+    }
+  };
 
-        setMessage(message);
+  const handleVerificationCodeEntered = async () => {
+    try {
+      // Send the entered verification code to the server for validation
+      const response = await axiosInstance.post("auth/VerifyCode", {
+        token: localStorage.getItem("resetToken"),
+        verificationCode: verificationCode,
+      });
+
+      const { success, msgError } = response.data;
+      if (success) {
+          
+        navigate("/Resetpassword", {
+          state: { token: localStorage.getItem("resetToken") },
+        });
+      } else {
+        setMessage(msgError);
+        toast.error(msgError); 
       }
     } catch (error) {
       toast.error(error.response.data.msgError);
     }
   };
-
   return (
     <div className="bg">
       <Container>
@@ -58,9 +84,29 @@ const Forgotpassword = () => {
                   />
                 </Form.Group>
                 <Button variant="primary" type="submit">
-                  Submit
+                {loading ? "Sending..." : "Submit"}
                 </Button>
-                {message && <p>{message}</p>}
+                {verificationCodeSent && (
+                  <>
+                    <p>
+                      Verification code sent. Check your email and enter the
+                      code below:
+                    </p>
+               
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter verification code"
+                      value={verificationCode}
+                      onChange={(e) => setVerificationCode(e.target.value)}
+                    />
+                    <Button
+                      variant="primary"
+                      onClick={handleVerificationCodeEntered}
+                    >
+                      Verify Code
+                    </Button>
+                  </>
+                )}
               </div>
             </Form>
           </Col>

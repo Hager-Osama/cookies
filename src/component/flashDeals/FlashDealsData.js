@@ -20,7 +20,7 @@ const FlashDealsData = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get("https://restaurant-project-drab.vercel.app/meal/getallMeal");
-        setFlashDealsData(response.data.data.meals);
+        setFlashDealsData(response.data.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {

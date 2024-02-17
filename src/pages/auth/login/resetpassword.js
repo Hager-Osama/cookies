@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Col, Row, Container } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import "./style.css";
-import axiosInstance from "../../../api/API";
 
 const Resetpassword = () => {
   const [loadingSubmit, setLoadingSubmit] = useState(false);
@@ -19,12 +18,19 @@ const Resetpassword = () => {
   const location = useLocation();
 
   const submitForm = async (e) => {
+
     e.preventDefault();
+    if (password !== confirmPassword) {
+      setPasswordMatchError(true);
+      setLoadingSubmit(false);
+      return;
+    }
+    // Reset password match error state
+    setPasswordMatchError(false);
     try {
-      console.log("asdasdasd")
       if (loadingSubmit) return;
       setLoadingSubmit(true);
-      const response = await axiosInstance.patch(
+      const response = await axios.patch(
         "/auth/resetPassword",
         {},
         {
@@ -45,15 +51,6 @@ const Resetpassword = () => {
     setLoadingSubmit(false);
   };
 
-  const passwordChanged = (e) => {
-    setPassword(e.target.value);
-  };
-  const confirmPasswordChanged = (e) => {
-    setConfirmPassword(e.target.value);
-  };
-  const checkPasswordsMatch = () => {
-    setPasswordMatchError(password !== confirmPassword);
-  };
   return (
     <div className="bg">
       <Container>
@@ -69,9 +66,9 @@ const Resetpassword = () => {
                       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                       title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                       type={showPassword ? "text" : "password"}
-                      placeholder="New password"
+                      placeholder="Password"
                       value={password}
-                      onChange={passwordChanged}
+                      onChange={(e) => setPassword(e.target.value)}
                       required
                     />
                     <div
@@ -85,11 +82,6 @@ const Resetpassword = () => {
                       )}
                     </div>
                   </div>
-                  {passwordMatchError && (
-                    <Form.Text className="text-danger">
-                      Passwords do not match.
-                    </Form.Text>
-                  )}
                 </Form.Group>
 
                 <Form.Group
@@ -102,8 +94,8 @@ const Resetpassword = () => {
                       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                       title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                       type={showPassword ? "text" : "password"}
-                      placeholder="Confirm new password"
-                      onChange={confirmPasswordChanged}
+                      placeholder="Confirm Password"
+                      onChange={(e) => setConfirmPassword(e.target.value)}
                       value={confirmPassword}
                       required
                     />
