@@ -25,12 +25,10 @@ const Forgotpassword = () => {
       if (success) {
         const resetToken = data.token;
 
-    
         navigate("/Resetpassword");
 
         setMessage(message);
       } else {
-
         setMessage(message);
       }
     } catch (error) {
