@@ -13,11 +13,13 @@ import Last from '../component/last/last'
 import Footer from '../component/Footer/Footer'
 import SecondFooter from '../component/Footer/SecondFooter'
 
+
 const HomePage = () => {
   return (
     <div>
       <NavBar/>
       <Header1/>
+
       <FlashDealsData/>
       <IconSectionData/>
       <ReactCardDate/> 

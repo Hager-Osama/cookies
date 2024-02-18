@@ -1,35 +1,38 @@
-import React, { useEffect, useState } from 'react'
-import FlashDeals from './FlashDealsDesgin'
-import axios from 'axios';
-import { Button } from 'react-bootstrap';
-import { Modal, Form} from 'react-bootstrap';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useEffect, useState } from "react";
+import FlashDeals from "./FlashDealsDesgin";
+import axios from "axios";
+import { Button } from "react-bootstrap";
+import { Modal, Form } from "react-bootstrap";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const FlashDealsData = () => {
   const [flashDealsData, setFlashDealsData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [loadingSubmit, setLoadingSubmit]=useState(false);
-  const [showForm,setShowForm]=useState(false);
-  const [formData,setFormData]=useState({
-    title:'',
-    meal:null,
-    offer:'',
-    expired:'',
-  })
+ /* const [loadingSubmit, setLoadingSubmit] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({
+    title: "",
+    meal: null,
+    offer: "",
+    expired: "",
+  });*/
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("https://restaurant-project-drab.vercel.app/meal/getallMeal");
+        const response = await axios.get(
+          "https://restaurant-project-drab.vercel.app/meal/getallMeal"
+        );
         setFlashDealsData(response.data.data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
     };
     fetchData();
   }, []);
-  //POST
+
+  /* //POST
    const handelPostData =async()=>{
     setShowForm(true)
    };
@@ -67,60 +70,84 @@ const FlashDealsData = () => {
     }finally{
       setLoadingSubmit(false)
     }
-   }
+   } */
 
 
   if (loading){
     return(<p>loading</p>)
   }
-  
-    const card= flashDealsData.map((d)=>(
-        <FlashDeals
-        key={d._id}
-        imageUrl={d.image.url}
-        present={d.offer}
-        Title={d.title}
-        DaysRemaining={d.expired}
-        
-        /> )
-        )
-   
+ 
+
+  const card = flashDealsData.map((d) => (
+    <FlashDeals
+      key={d._id}
+      imgUrl={d.image.url}
+      price={d.price}
+      name={d.title}
+    
+    />
+  ));
+
   return (
     <>
-    <div className='d-flex flex-wrap justify-content-evenly container mt-5  '>
+      <div className="d-flex flex-wrap justify-content-evenly container mt-5  ">
         {card}
-    </div>
-    <Button onClick={handelPostData}>Add card</Button>
-    {/* Form Modal */}
-     <Modal show={showForm} onHide={handleCloseForm}>
-          <Modal.Header closeButton>
+      </div>
+   
+      {/* <Button onClick={handelPostData}>Add card</Button>
+      <Modal show={showForm} onHide={handleCloseForm}>
+        <Modal.Header closeButton>
           <Modal.Title>Add New Card</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
+        </Modal.Header>
+        <Modal.Body>
           <Form onSubmit={handleSubmitForm}>
             <Form.Group controlId="formImage">
               <Form.Label>Image</Form.Label>
-              <Form.Control type="file" name="meal" accept="image/*" onChange={handleFileChange} required />
+              <Form.Control
+                type="file"
+                name="meal"
+                accept="image/*"
+                onChange={handleFileChange}
+                required
+              />
             </Form.Group>
             <Form.Group controlId="formTitle">
               <Form.Label>Title</Form.Label>
-              <Form.Control type="text" name="title" value={formData.title} onChange={handleInputChange} required />
+              <Form.Control
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleInputChange}
+                required
+              />
             </Form.Group>
             <Form.Group controlId="formOffer">
               <Form.Label>Offer</Form.Label>
-              <Form.Control type="text" name="offer" value={formData.offer} onChange={handleInputChange} required />
+              <Form.Control
+                type="text"
+                name="offer"
+                value={formData.offer}
+                onChange={handleInputChange}
+                required
+              />
             </Form.Group>
             <Form.Group controlId="formExpired">
               <Form.Label>Expired</Form.Label>
-              <Form.Control type="text" name="expired" value={formData.expired} onChange={handleInputChange} required />
+              <Form.Control
+                type="text"
+                name="expired"
+                value={formData.expired}
+                onChange={handleInputChange}
+                required
+              />
             </Form.Group>
             <Button type="submit" disabled={loadingSubmit}>
-              { loadingSubmit?"submitting":"submit"}
+              {loadingSubmit ? "submitting" : "submit"}
             </Button>
           </Form>
-          </Modal.Body>
-         </Modal>
+        </Modal.Body>
+      </Modal> */}
     </>
-  )
-}
+  );
+};
 export default FlashDealsData;

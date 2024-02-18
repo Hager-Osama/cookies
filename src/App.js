@@ -4,10 +4,11 @@ import LoginPage from "./pages/auth/login/loginPage.js";
 import RegisterPage from "./pages/auth/register/registerPage.js";
 import Forgotpassword from "./pages/auth/login/forgotpassword.js";
 import Resetpassword from "./pages/auth/login/resetpassword.js";
+import ShoppingCartProvider from "./component/context/shoppingCartContext.js";
 
 function App() {
   return (
-    <div className="App">
+    <ShoppingCartProvider>
       <BrowserRouter>
         <Routes>
           <Route index element={<HomePage />} />
@@ -15,10 +16,9 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/forgotpassword" element={<Forgotpassword />} />
           <Route path="/resetpassword" element={<Resetpassword />} />
-
         </Routes>
       </BrowserRouter>
-    </div>
+    </ShoppingCartProvider>
   );
 }
 

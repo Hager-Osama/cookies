@@ -11,7 +11,7 @@ const NavBar = () => {
     setUser(currentLocalUser);
   }, [null]);
   return (
-    <Navbar className="sticky-top " expand="sm">
+    <Navbar className="sticky-top shadow-sm mb-2 bg-white " expand="sm">
       <Container>
         <Navbar.Brand>
           <a href="/">
@@ -32,7 +32,7 @@ const NavBar = () => {
               <Nav.Link
                 href="/profile"
                 className="nav-text d-flex mt-3 justify-content-center"
-                style={{ color: "#f17228" }}
+                style={{ color: "#f17228", fontWeight: "bold" }}
               >
                 <i className="fa-solid fa-user"></i>
                 <p>{user.userName}</p>
@@ -41,24 +41,46 @@ const NavBar = () => {
               <Nav.Link
                 href="/login"
                 className="nav-text d-flex mt-3 justify-content-center"
-                style={{ color: "#f17228" }}
+                style={{ color: "#f17228", fontWeight: "bold" }}
               >
                 <i className="fa-solid fa-user"></i>
                 <p>Login</p>
               </Nav.Link>
             )}
+
             <Nav.Link
               href="/cart"
               className="nav-text d-flex mt-3 justify-content-center"
-              style={{ color: "#f17228" }}
+              style={{
+                color: "#f17228",
+                fontWeight: "bold",
+                position: "relative",
+              }}
             >
               <i className="fa-solid fa-cart-shopping"></i>
               <p>cart</p>
+              <div
+                className="rounded-circle bg-danger d-flex justify-content-center align-items-center;"
+                style={{
+                  position: "absolute",
+                  color: "white",
+                  width: "1.25rem",
+                  height: "1.25rem",
+                  transform: "translate(25%, 25%)",
+                  bottom:16,
+                  right: 0,
+                  alignItems: "center",
+                }}
+              >
+                3
+              </div>
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
         {user !== null ? (
           <Button
+            variant="outline-success"
+            className="rounded-circle mx-3"
             type="text"
             onClick={() => {
               AuthLocalUtils.deleteLoginData();
