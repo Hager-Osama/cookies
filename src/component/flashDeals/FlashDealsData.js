@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 const FlashDealsData = () => {
   const [flashDealsData, setFlashDealsData] = useState([]);
   const [loading, setLoading] = useState(true);
- /* const [loadingSubmit, setLoadingSubmit] = useState(false);
+  /* const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
@@ -17,7 +17,7 @@ const FlashDealsData = () => {
     expired: "",
   });*/
   useEffect(() => {
-    const fetchData = async () => {
+  const fetchData = async () => {
       try {
         const response = await axios.get(
           "https://restaurant-project-drab.vercel.app/meal/getallMeal"
@@ -72,19 +72,17 @@ const FlashDealsData = () => {
     }
    } */
 
-
-  if (loading){
-    return(<p>loading</p>)
+  if (loading) {
+    return <p>loading</p>;
   }
- 
 
   const card = flashDealsData.map((d) => (
     <FlashDeals
+      id={d._id}
       key={d._id}
       imgUrl={d.image.url}
       price={d.price}
       name={d.title}
-    
     />
   ));
 
@@ -93,7 +91,7 @@ const FlashDealsData = () => {
       <div className="d-flex flex-wrap justify-content-evenly container mt-5  ">
         {card}
       </div>
-   
+
       {/* <Button onClick={handelPostData}>Add card</Button>
       <Modal show={showForm} onHide={handleCloseForm}>
         <Modal.Header closeButton>

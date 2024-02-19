@@ -1,5 +1,5 @@
 import React from 'react'
-import ImageHeader from "../images/ImageHeader.png"
+import logo from "../images/logo.png"
 
 const Header1 = () => {
   return (
@@ -22,7 +22,7 @@ const Header1 = () => {
         
         <div className=' app-right'>
          <div className='image-container'> 
-           <img src={ImageHeader}/> 
+           <img src={logo}/> 
          </div>
         </div>
                     

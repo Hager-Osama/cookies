@@ -1,24 +1,24 @@
-import React from "react";
-import { Offcanvas } from "react-bootstrap";
+import React, { useState } from "react";
+import { Offcanvas, Stack } from "react-bootstrap";
 import { useShoppingCart } from "../context/shoppingCartContext";
 import CartItem from "./cartItem";
+import FormateCurrency from "../flashDeals/formateCurrency";
 
-const ShoppingCart = () => {
-  const { cartItems } = useShoppingCart();
+const ShoppingCart = ({ isOpen }) => {
+  const { cartItems, closeCart } = useShoppingCart();
+
   return (
-    <Offcanvas show={true}>
+    <Offcanvas show={isOpen} onHide={closeCart} placement="end">
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>Cart</Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
-        {cartItems.map((item) => (
-          <CartItem
-            key={item.id}
-            imgUrl={item.image.url}
-            price={item.price}
-            name={item.title}
-          />
-        ))}
+        <Stack gap={3}>
+          {cartItems.map((item) => (
+            <CartItem key={item.id} {...item} />
+          ))}
+          
+        </Stack>
       </Offcanvas.Body>
     </Offcanvas>
   );

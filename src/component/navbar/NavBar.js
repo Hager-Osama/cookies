@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Container, Nav, FormControl, Button } from "react-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
-import MaskGroup from "../../images/MaskGroup.png";
+import logo from "../../images/logo.png";
 import "./NavBar.css";
 import AuthLocalUtils from "../../pages/local_utils";
+import { useShoppingCart } from "../context/shoppingCartContext";
 const NavBar = () => {
+  const { openCart, cartQuantity } = useShoppingCart();
+
   const [user, setUser] = useState(null);
   useEffect(() => {
     const currentLocalUser = AuthLocalUtils.getLoginData();
@@ -15,7 +18,11 @@ const NavBar = () => {
       <Container>
         <Navbar.Brand>
           <a href="/">
-            <img src={MaskGroup} className="logo" />
+            <img
+              src={logo}
+              style={{ width: "70px", height: "70px" }}
+              alt="logo"
+            />
           </a>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -31,56 +38,68 @@ const NavBar = () => {
             {user ? (
               <Nav.Link
                 href="/profile"
-                className="nav-text d-flex mt-3 justify-content-center"
-                style={{ color: "#f17228", fontWeight: "bold" }}
+                className="nav-text d-flex mt-1 justify-content-center"
+                style={{ color: "rgb(128 75 36)" }}
               >
-                <i className="fa-solid fa-user"></i>
-                <p>{user.userName}</p>
+                <i class="fa-regular fa-user"></i>
+                {user.userName}
               </Nav.Link>
             ) : (
               <Nav.Link
                 href="/login"
-                className="nav-text d-flex mt-3 justify-content-center"
-                style={{ color: "#f17228", fontWeight: "bold" }}
+                className="nav-text d-flex mt-1 justify-content-center"
+                style={{ color: "rgb(128 75 36)" }}
               >
-                <i className="fa-solid fa-user"></i>
-                <p>Login</p>
+                <i class="fa-regular fa-user"></i>
+                Login
               </Nav.Link>
             )}
-
             <Nav.Link
-              href="/cart"
-              className="nav-text d-flex mt-3 justify-content-center"
+              href="/wishlist"
+              className="nav-text d-flex mt-1 justify-content-center"
+              style={{ color: "rgb(128 75 36)" }}
+            >
+              <i class="fa-regular fa-heart"></i>
+              Wishlist
+            </Nav.Link>
+            <Button
+              variant="outline-warning"
+              className="rounded-circle d-flex mt-1 justify-content-center"
               style={{
-                color: "#f17228",
-                fontWeight: "bold",
+                color: "rgb(128 75 36)",
+                width: "5.25rem",
+                height: "2.60rem",
+
                 position: "relative",
+                margin: " auto",
+                top: "2px",
               }}
+              onClick={openCart}
             >
               <i className="fa-solid fa-cart-shopping"></i>
-              <p>cart</p>
+              cart
               <div
-                className="rounded-circle bg-danger d-flex justify-content-center align-items-center;"
+                className="rounded-circle bg-success d-flex justify-content-center align-items-center;"
                 style={{
                   position: "absolute",
                   color: "white",
                   width: "1.25rem",
                   height: "1.25rem",
                   transform: "translate(25%, 25%)",
-                  bottom:16,
+                  bottom: 0,
                   right: 0,
                   alignItems: "center",
                 }}
               >
-                3
+                {cartQuantity}
               </div>
-            </Nav.Link>
+            </Button>
           </Nav>
         </Navbar.Collapse>
         {user !== null ? (
           <Button
             variant="outline-success"
-            className="rounded-circle mx-3"
+            className=" mx-2 mt-2"
             type="text"
             onClick={() => {
               AuthLocalUtils.deleteLoginData();
