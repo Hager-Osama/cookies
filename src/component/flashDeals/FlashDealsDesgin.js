@@ -19,7 +19,7 @@ const FlashDeals = ({ imgUrl, name, price, id }) => {
         style={{ height: "250px", objectFit: "cover", position: "relative" }}
       />
       <div style={{ position: "absolute", right: 0, color: "red" }}>
-        <i className="fa-solid fa-heart"></i>
+        <i className="fa-regular fa-heart"></i>
       </div>
       <Card.Body>
         <Card.Title className="mb-3 d-flex align-items-baseline justify-content-between">

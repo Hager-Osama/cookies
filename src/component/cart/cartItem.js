@@ -1,7 +1,5 @@
 import React from "react";
 import { Button, Stack } from "react-bootstrap";
-import FlashDeals from "../flashDeals/FlashDealsDesgin";
-import FlashDealsData from "../flashDeals/FlashDealsData";
 import FormateCurrency from "../flashDeals/formateCurrency";
 import { useShoppingCart } from "../context/shoppingCartContext";
 

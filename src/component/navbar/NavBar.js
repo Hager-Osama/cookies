@@ -50,7 +50,7 @@ const NavBar = () => {
                 className="nav-text d-flex mt-1 justify-content-center"
                 style={{ color: "rgb(128 75 36)" }}
               >
-                <i class="fa-regular fa-user"></i>
+                <i className="fa-regular fa-user"></i>
                 Login
               </Nav.Link>
             )}
@@ -59,7 +59,7 @@ const NavBar = () => {
               className="nav-text d-flex mt-1 justify-content-center"
               style={{ color: "rgb(128 75 36)" }}
             >
-              <i class="fa-regular fa-heart"></i>
+              <i className="fa-regular fa-heart"></i>
               Wishlist
             </Nav.Link>
             <Button
