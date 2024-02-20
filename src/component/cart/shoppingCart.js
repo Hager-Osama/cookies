@@ -15,9 +15,8 @@ const ShoppingCart = ({ isOpen }) => {
       <Offcanvas.Body>
         <Stack gap={3}>
           {cartItems.map((item) => (
-            <CartItem key={item.id} {...item} />
+            <CartItem key={item.id} item={item} />
           ))}
-          
         </Stack>
       </Offcanvas.Body>
     </Offcanvas>

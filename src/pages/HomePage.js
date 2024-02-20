@@ -19,7 +19,6 @@ const HomePage = () => {
     <div>
       <NavBar/>
       <Header1/>
-
       <FlashDealsData/>
       <IconSectionData/>
       <ReactCardDate/> 

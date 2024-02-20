@@ -5,11 +5,9 @@ import FlashDealsData from "../flashDeals/FlashDealsData";
 import FormateCurrency from "../flashDeals/formateCurrency";
 import { useShoppingCart } from "../context/shoppingCartContext";
 
-const CartItem = ({ id, quantity }) => {
+const CartItem = ({ item }) => {
   const { removeItemFromCart } = useShoppingCart();
-  const item = FlashDeals.find((i) => i.id === id);
-  console.log(item);
-  if (item == null) return null;
+
   return (
     <Stack direction="horizontal" gap={2} className="d-flex align-items-center">
       <img
@@ -20,9 +18,9 @@ const CartItem = ({ id, quantity }) => {
       <div className="me-auto">
         <div>
           {item.name}{" "}
-          {quantity > 1 && (
+          {item.quantity > 1 && (
             <span className="text-muted" style={{ fontSize: "0.65rem" }}>
-              x {quantity}
+              x {item.quantity}
             </span>
           )}
         </div>
@@ -31,12 +29,12 @@ const CartItem = ({ id, quantity }) => {
           {FormateCurrency(item.price)}
         </div>
       </div>
-      <div>{FormateCurrency(item.price * quantity)}</div>
+      <div>{FormateCurrency(item.price * item.quantity)}</div>
       <Button
         variant="outline-danger"
         size="sm"
         onClick={() => {
-          removeItemFromCart(id);
+          removeItemFromCart(item.id);
         }}
       >
         &times;
