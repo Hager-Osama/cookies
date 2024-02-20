@@ -7,7 +7,7 @@ import { useShoppingCart } from "../context/shoppingCartContext";
 
 const CartItem = ({ id, quantity }) => {
   const { removeItemFromCart } = useShoppingCart();
-  const item = FlashDealsData.find((i) => i.id === id);
+  const item = FlashDeals.find((i) => i.id === id);
   console.log(item);
   if (item == null) return null;
   return (
