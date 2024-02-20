@@ -10,6 +10,13 @@ const ShoppingCartProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [cartItems, setCartItems] = useState(initialCartItems);
 
+
+
+ 
+
+
+
+
   useEffect(() => {
     localStorage.setItem("shopping-cart", JSON.stringify(cartItems));
   }, [cartItems]);

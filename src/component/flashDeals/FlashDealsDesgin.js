@@ -11,29 +11,15 @@ const FlashDeals = ({ imgUrl, name, price, id }) => {
     removeItemFromCart,
   } = useShoppingCart();
   const quantity = getItemQuantity(id);
-  const { addToWishlist, removeFromWishlist, isItemInWishlist } = useWishlist(); // Using wishlist context
-  const [isWishlisted, setIsWishlisted] = useState(isItemInWishlist(id)); // Track wishlist state locally
-  const handleAddToWishlist = () => {
-    addToWishlist(id);
-    setIsWishlisted(true);
-  };
-
-  const handleRemoveFromWishlist = () => {
-    removeFromWishlist(id);
-    setIsWishlisted(false);
-  };
   return (
     <Card className="h-100">
       <Card.Img
         src={imgUrl}
         variant="top"
-        style={{ height: "250px", objectFit: "cover" ,position:"relative" }}
+        style={{ height: "250px", objectFit: "cover", position: "relative" }}
       />
-      <div style={{position:"absolute",right:0 ,color:"red"}}>
-      <i
-          className={isWishlisted ? "fa-solid fa-heart" : "fa-regular fa-heart"}
-          onClick={isWishlisted ? handleRemoveFromWishlist : handleAddToWishlist}
-        ></i>
+      <div style={{ position: "absolute", right: 0, color: "red" }}>
+        <i className="fa-solid fa-heart"></i>
       </div>
       <Card.Body>
         <Card.Title className="mb-3 d-flex align-items-baseline justify-content-between">
