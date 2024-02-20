@@ -1,18 +1,28 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import ShoppingCart from "../cart/shoppingCart";
-
+import axios from "axios";
 const ShoppingCartContext = createContext({});
-const initialCartItems = localStorage.getItem("shopping-cart")
-  ? JSON.parse(localStorage.getItem("shopping-cart"))
-  : [];
 
 const ShoppingCartProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [cartItems, setCartItems] = useState(initialCartItems);
+  const [cartItems, setCartItems] = useState([]);
+/*get */
+useEffect(() => {
+  const fetchCartData = async () => {
+    try {
+      const response = await axios.get('https://restaurant-project-drab.vercel.app/cart');
 
-  useEffect(() => {
-    localStorage.setItem("shopping-cart", JSON.stringify(cartItems));
-  }, [cartItems]);
+      if (Array.isArray(response.data) && response.data.length > 0) {
+        setCartItems(response.data);
+      } else {
+        console.warn('Cart data is empty or not an array!');
+      }
+    } catch (error) {
+      console.error('Error fetching cart data:', error);
+    }
+  };
+  fetchCartData();
+}, []);
 
   const openCart = () => {
     setIsOpen(true);
@@ -22,49 +32,70 @@ const ShoppingCartProvider = ({ children }) => {
   };
 
   const getItemQuantity = (id) => {
-    return cartItems.find((item) => item.id === id)?.quantity || 0;
+    return cartItems.length > 0 ? cartItems.find((item) => item.id === id)?.quantity || 0 : 0;
   };
+  
+  
   //add to cart function
-  const increaseCartQuantity = (id) => {
-    //لو العنصر دا مش موجود جوا الكارت ايتم عايزك تضيفه فى الكارت
-    setCartItems((currItems) => {
-      if (currItems.find((item) => item.id === id) == null) {
-        return [...currItems, { id, quantity: 1 }];
-      } else {
-        return currItems.map((item) => {
+  const increaseCartQuantity = async (id, quantity = 1) => {
+    try {
+      const response = await axios.post('https://restaurant-project-drab.vercel.app/cart', {
+        mealId: id,
+        quantity,
+      }, {
+        headers: {
+          token: localStorage.getItem('resetToken'),
+        },
+      });
+      if (response.data.success) {
+        
+        const updatedCartItems = cartItems.map((item) => {
           if (item.id === id) {
-            return { ...item, quantity: item.quantity + 1 };
-          } else {
-            return item;
+            return { ...item, quantity: response.data.updatedQuantity };
           }
+          return item;
         });
-      }
-    });
+        setCartItems(updatedCartItems);
+      } 
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
+    }
   };
   //decrese from cart
-  const decreaseCartQuantity = (id) => {
-    setCartItems((currItems) => {
-      if (currItems.find((item) => item.id === id) == null) {
-        return currItems.filter((item) => item.id !== id);
-      } else {
-        return currItems.map((item) => {
-          if (item.id === id) {
-            return { ...item, quantity: item.quantity - 1 };
-          } else {
-            return item;
-          }
+  const decreaseCartQuantity = async (id) => {
+    if (getItemQuantity(id) > 1) {
+      try {
+        const response = await axios.patch('https://restaurant-project-drab.vercel.app/cart', {
+          mealId: id,
+          quantity: -1, 
+        }, {
+          headers: {
+            token: localStorage.getItem('resetToken'),
+          },
         });
+        if (response.data.success) {
+          const updatedCartItems = cartItems.map((item) => {
+            if (item.id === id) {
+              return { ...item, quantity: response.data.updatedQuantity };
+            }
+            return item;
+          });
+          setCartItems(updatedCartItems);
+        } else {
+          console.error('API error:', response.data.error);
+        }
+      } catch (error) {
+        console.error('Error decreasing item quantity:', error);
       }
-    });
-  };
+    }};
   //remove form cart
-  const removeItemFromCart = (id) => {
+  const removeItemFromCart = async(id) => {
     setCartItems((currItems) => currItems.filter((item) => item.id !== id));
   };
-  const cartQuantity = cartItems.reduce(
-    (quantity, item) => item.quantity + quantity,
-    0
-  );
+  const cartQuantity = cartItems.length > 0
+  ? cartItems.reduce((quantity, item) => item.quantity + quantity, 0)
+  : 0;
+
   return (
     <ShoppingCartContext.Provider
       value={{

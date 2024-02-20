@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-
   const [wishlistItems, setWishlistItems] = useState([]); // Initialize wishlist state
 
   useEffect(() => {
@@ -19,4 +18,6 @@ const handleRemoveFromWishlist = () => {
     setWishlistItems(wishlistItems.filter((item) => item.id !== id));
     localStorage.setItem('wishlist', JSON.stringify(wishlistItems.filter((item) => item.id !== id)));
 };
+
+  
 

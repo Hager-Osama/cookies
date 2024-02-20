@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Offcanvas, Stack } from "react-bootstrap";
 import { useShoppingCart } from "../context/shoppingCartContext";
 import CartItem from "./cartItem";
-import FormateCurrency from "../flashDeals/formateCurrency";
+
 
 const ShoppingCart = ({ isOpen }) => {
   const { cartItems, closeCart } = useShoppingCart();
