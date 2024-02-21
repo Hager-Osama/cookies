@@ -17,7 +17,7 @@ const FlashDealsData = () => {
     expired: "",
   });*/
   useEffect(() => {
-  const fetchData = async () => {
+    const fetchData = async () => {
       try {
         const response = await axios.get(
           "https://restaurant-project-drab.vercel.app/meal/getallMeal"
@@ -76,14 +76,8 @@ const FlashDealsData = () => {
     return <p>loading</p>;
   }
 
-  const card = flashDealsData.map((d) => (
-    <FlashDeals
-      id={d._id}
-      key={d._id}
-      imgUrl={d.image.url}
-      price={d.price}
-      name={d.title}
-    />
+  const card = flashDealsData.map((meal) => (
+    <FlashDeals key={meal._id} meal={meal} />
   ));
 
   return (

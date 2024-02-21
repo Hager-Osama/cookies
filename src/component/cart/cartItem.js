@@ -9,13 +9,13 @@ const CartItem = ({ item }) => {
   return (
     <Stack direction="horizontal" gap={2} className="d-flex align-items-center">
       <img
-        src={item.imgUrl}
+        src={item.mealId.image.url}
         alt="cart-img"
         style={{ width: "125px", height: "75px", objectFit: "cover" }}
       />
       <div className="me-auto">
         <div>
-          {item.name}{" "}
+          {item.mealId.title}{" "}
           {item.quantity > 1 && (
             <span className="text-muted" style={{ fontSize: "0.65rem" }}>
               x {item.quantity}
@@ -24,15 +24,15 @@ const CartItem = ({ item }) => {
         </div>
         <div className="text-muted" style={{ fontSize: "0.75rem" }}>
           {" "}
-          {FormateCurrency(item.price)}
+          {FormateCurrency(item.mealId.price)}
         </div>
       </div>
-      <div>{FormateCurrency(item.price * item.quantity)}</div>
+      <div>{FormateCurrency(item.mealId.price * item.quantity)}</div>
       <Button
         variant="outline-danger"
         size="sm"
         onClick={() => {
-          removeItemFromCart(item.id);
+          removeItemFromCart(item.mealId._id);
         }}
       >
         &times;

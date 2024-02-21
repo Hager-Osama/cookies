@@ -3,7 +3,6 @@ import { Offcanvas, Stack } from "react-bootstrap";
 import { useShoppingCart } from "../context/shoppingCartContext";
 import CartItem from "./cartItem";
 
-
 const ShoppingCart = ({ isOpen }) => {
   const { cartItems, closeCart } = useShoppingCart();
 

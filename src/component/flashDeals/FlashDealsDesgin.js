@@ -3,18 +3,19 @@ import Card from "react-bootstrap/Card";
 import FormateCurrency from "./formateCurrency";
 import { Button } from "react-bootstrap";
 import { useShoppingCart } from "../context/shoppingCartContext";
-const FlashDeals = ({ imgUrl, name, price, id }) => {
+const FlashDeals = ({ meal }) => {
   const {
     getItemQuantity,
     increaseCartQuantity,
     decreaseCartQuantity,
     removeItemFromCart,
   } = useShoppingCart();
-  const quantity = getItemQuantity(id) || 0;
+  const quantity = getItemQuantity(meal) || 0;
+
   return (
     <Card className="h-100">
       <Card.Img
-        src={imgUrl}
+        src={meal.image?.url}
         variant="top"
         style={{ height: "250px", objectFit: "cover", position: "relative" }}
       />
@@ -23,14 +24,17 @@ const FlashDeals = ({ imgUrl, name, price, id }) => {
       </div>
       <Card.Body>
         <Card.Title className="mb-3 d-flex align-items-baseline justify-content-between">
-          <span className="fs-4">{name}</span>
+          <span className="fs-4">{meal.title}</span>
           <span className="me-2 text-muted fs-6 ">
-            {FormateCurrency(price)}
+            {FormateCurrency(meal.price)}
           </span>
         </Card.Title>
         <div className="mt-auto">
           {quantity === 0 ? (
-            <Button className="w-100" onClick={() => increaseCartQuantity(id)}>
+            <Button
+              className="w-100"
+              onClick={() => increaseCartQuantity(meal)}
+            >
               Add To Cart
             </Button>
           ) : (
@@ -42,14 +46,14 @@ const FlashDeals = ({ imgUrl, name, price, id }) => {
                 className="d-flex align-items-center justify-content-center"
                 style={{ gap: "0.5rem" }}
               >
-                <Button onClick={() => decreaseCartQuantity(id)}>-</Button>
+                <Button onClick={() => decreaseCartQuantity(meal)}>-</Button>
                 <span className="fs-4"> {quantity} in cart </span>
-                <Button onClick={() => increaseCartQuantity(id)}>+</Button>
+                <Button onClick={() => increaseCartQuantity(meal)}>+</Button>
               </div>
               <Button
                 variant="danger"
                 size="sm"
-                onClick={() => removeItemFromCart(id)}
+                onClick={() => removeItemFromCart(meal)}
               >
                 Remove
               </Button>
