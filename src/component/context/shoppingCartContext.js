@@ -81,6 +81,7 @@ const ShoppingCartProvider = ({ children }) => {
       await removeItemFromCart(meal);
       return;
     }
+    
     try {
       const response = await axios.patch(
         "https://restaurant-project-drab.vercel.app/cart",
