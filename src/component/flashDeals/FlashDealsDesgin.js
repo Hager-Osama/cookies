@@ -10,7 +10,7 @@ const FlashDeals = ({ imgUrl, name, price, id }) => {
     decreaseCartQuantity,
     removeItemFromCart,
   } = useShoppingCart();
-  const quantity = getItemQuantity(id);
+  const quantity = getItemQuantity(id) || 0;
   return (
     <Card className="h-100">
       <Card.Img
