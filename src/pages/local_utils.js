@@ -11,7 +11,7 @@ class AuthLocalUtils {
   }
 
   static getToken() {
-    return AuthLocalUtils.getLoginData().token;
+    return AuthLocalUtils.getLoginData()?.token;
   }
 
   static deleteLoginData() {

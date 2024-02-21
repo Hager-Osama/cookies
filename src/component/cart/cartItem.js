@@ -32,7 +32,7 @@ const CartItem = ({ item }) => {
         variant="outline-danger"
         size="sm"
         onClick={() => {
-          removeItemFromCart(item.mealId._id);
+          removeItemFromCart(item.mealId);
         }}
       >
         &times;

@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import ShoppingCart from "../cart/shoppingCart";
 import axios from "axios";
 import AuthLocalUtils from "../../pages/local_utils";
+import axiosInstance from "../../api/API";
 const ShoppingCartContext = createContext({});
 
 const ShoppingCartProvider = ({ children }) => {
@@ -36,7 +37,7 @@ const ShoppingCartProvider = ({ children }) => {
 
   const getItemQuantity = (meal) => {
     return cartItems.length > 0
-      ? cartItems.find((item) => item.id === meal._id)?.quantity || 0
+      ? cartItems.find((item) => item.mealId._id === meal._id)?.quantity || 0
       : 0;
   };
 
@@ -74,41 +75,57 @@ const ShoppingCartProvider = ({ children }) => {
   //decrese from cart
   const decreaseCartQuantity = async (meal) => {
     const id = meal._id;
-    if (getItemQuantity(id) > 1) {
-      try {
-        const response = await axios.patch(
-          "https://restaurant-project-drab.vercel.app/cart",
-          {
-            mealId: id,
-            quantity: -1,
+    const mealQuantity = getItemQuantity(meal);
+    const newQuantity = mealQuantity - 1;
+    if (mealQuantity == 1) {
+      await removeItemFromCart(meal);
+      return;
+    }
+    try {
+      const response = await axios.patch(
+        "https://restaurant-project-drab.vercel.app/cart",
+        {
+          mealId: id,
+          quantity: newQuantity,
+        },
+        {
+          headers: {
+            token: AuthLocalUtils.getToken(),
           },
-          {
-            headers: {
-              token: AuthLocalUtils.getToken(),
-            },
-          }
-        );
-        if (response.data.success) {
-          const updatedCartItems = cartItems.map((item) => {
-            if (item.id === id) {
-              return { ...item, quantity: response.data.updatedQuantity };
-            }
-            return item;
-          });
-          setCartItems(updatedCartItems);
-        } else {
-          console.error("API error:", response.data.error);
         }
-      } catch (error) {
-        console.error("Error decreasing item quantity:", error);
-      }
+      );
+      const updatedCartItems = cartItems.map((item) => {
+        if (item.mealId._id === id) {
+          item.quantity = newQuantity;
+        }
+        return item;
+      });
+      setCartItems(updatedCartItems);
+    } catch (error) {
+      console.error("Error decreasing item quantity:", error);
     }
   };
   //remove form cart
   const removeItemFromCart = async (meal) => {
-    const id = meal._id;
-    setCartItems((currItems) => currItems.filter((item) => item.id !== id));
+    console.log("token:", AuthLocalUtils.getToken());
+    try {
+      const response = await axios.patch(
+        `https://restaurant-project-drab.vercel.app/cart/${meal._id}`,
+        {},
+        {
+          headers: {
+            token: AuthLocalUtils.getToken(),
+          },
+        }
+      );
+      setCartItems([
+        ...cartItems.filter((item) => item.mealId._id !== meal._id),
+      ]);
+    } catch (error) {
+      console.error("Error removing item from cart:", error.data.message);
+    }
   };
+
   const cartQuantity =
     cartItems.length > 0
       ? cartItems.reduce((quantity, item) => item.quantity + quantity, 0)
