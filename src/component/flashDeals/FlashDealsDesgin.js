@@ -18,7 +18,7 @@ const FlashDealCard = ({ meal, onFavoriteClick }) => {
       <Card.Img
         src={meal.image?.url}
         variant="top"
-        style={{ height: "250px", objectFit: "cover", position: "relative" }}
+        style={{ height: "250px", objectFit: "cover" }}
       />
 
       <div className="favourite" style={{ color: "red" }}>

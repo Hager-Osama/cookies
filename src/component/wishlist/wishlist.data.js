@@ -45,7 +45,7 @@ const WishlistData = () => {
     }
   };
   return (
-    <>
+    <div className="d-flex flex-wrap justify-content-evenly container mt-5 ">
       {wishlistItems.map((item, index) => (
         <WishlistItem
           key={`${item._id}+${index}`}
@@ -54,7 +54,7 @@ const WishlistData = () => {
           wishlistItems={wishlistItems}
         />
       ))}
-    </>
+    </div>
   );
 };
 
