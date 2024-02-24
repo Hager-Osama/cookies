@@ -56,45 +56,47 @@ const FlashDealsData = () => {
       console.error("Error add to Wishlist ", error);
     }
   };
-  /* //POST
-   const handelPostData =async()=>{
-    setShowForm(true)
-   };
-   const handleCloseForm =()=>{
-    setShowForm(false)
-   };
-   const handleInputChange =(e)=>{
-    const {name ,value}=e.target;
-    setFormData({...formData, [name]:value});
-   };
-   const handleFileChange=(e)=>{
-    const file=e.target.files[0];
-    setFormData({
-      ...formData,
-      meal:file,
-    });
-   };
-   const handleSubmitForm =async(e)=>{
-    setLoadingSubmit(true);
-    e.preventDefault();
-    try {
-      const formDataUpload=new FormData();
-      formDataUpload.append("title",formData.title);
-      formDataUpload.append("meal",formData.meal);
-      formDataUpload.append("offer",formData.offer);
-      formDataUpload.append("expired",formData.expired);
-      const response= await axios.post("https://restaurant-project-drab.vercel.app/meal/createMeal",
-      formDataUpload)
-      setFlashDealsData([...flashDealsData,response.data.result]);
-      setShowForm(false);
-      toast.success("Card created successfully!"); // Show success toast message
 
-    } catch (error) {
-      console.log("erorr posting data:",error)
-    }finally{
-      setLoadingSubmit(false)
-    }
-   } */
+
+        /* //POST
+        const handelPostData =async()=>{
+          setShowForm(true)
+        };
+        const handleCloseForm =()=>{
+          setShowForm(false)
+        };
+        const handleInputChange =(e)=>{
+          const {name ,value}=e.target;
+          setFormData({...formData, [name]:value});
+        };
+        const handleFileChange=(e)=>{
+          const file=e.target.files[0];
+          setFormData({
+            ...formData,
+            meal:file,
+          });
+        };
+        const handleSubmitForm =async(e)=>{
+          setLoadingSubmit(true);
+          e.preventDefault();
+          try {
+            const formDataUpload=new FormData();
+            formDataUpload.append("title",formData.title);
+            formDataUpload.append("meal",formData.meal);
+            formDataUpload.append("offer",formData.offer);
+            formDataUpload.append("expired",formData.expired);
+            const response= await axios.post("https://restaurant-project-drab.vercel.app/meal/createMeal",
+            formDataUpload)
+            setFlashDealsData([...flashDealsData,response.data.result]);
+            setShowForm(false);
+            toast.success("Card created successfully!"); // Show success toast message
+
+          } catch (error) {
+            console.log("erorr posting data:",error)
+          }finally{
+            setLoadingSubmit(false)
+          }
+        } */
 
   if (loading) {
     return <p>loading</p>;
