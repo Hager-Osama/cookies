@@ -14,7 +14,7 @@ const NavBar = () => {
     setUser(currentLocalUser);
   }, [null]);
   return (
-    <Navbar className="sticky-top shadow-sm mb-2 bg-white " expand="sm">
+    <Navbar className="sticky-top shadow-sm  bg-white " expand="sm">
       <Container>
         <Navbar.Brand>
           <a href="/">

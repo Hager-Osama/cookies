@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import ShoppingCart from "../cart/shoppingCart";
 import axios from "axios";
 import AuthLocalUtils from "../../pages/local_utils";
-import axiosInstance from "../../api/API";
+
 const ShoppingCartContext = createContext({});
 
 const ShoppingCartProvider = ({ children }) => {
@@ -108,7 +108,6 @@ const ShoppingCartProvider = ({ children }) => {
   };
   //remove form cart
   const removeItemFromCart = async (meal) => {
-    console.log("token:", AuthLocalUtils.getToken());
     try {
       const response = await axios.patch(
         `https://restaurant-project-drab.vercel.app/cart/${meal._id}`,

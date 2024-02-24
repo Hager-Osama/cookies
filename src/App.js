@@ -5,7 +5,7 @@ import RegisterPage from "./pages/auth/register/registerPage.js";
 import Forgotpassword from "./pages/auth/login/forgotpassword.js";
 import Resetpassword from "./pages/auth/login/resetpassword.js";
 import ShoppingCartProvider from "./component/context/shoppingCartContext.js";
-
+import Wishlist_data from "./component/wishlist/wishlist.data.js"
 function App() {
   return (
     <ShoppingCartProvider>
@@ -16,6 +16,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/forgotpassword" element={<Forgotpassword />} />
           <Route path="/resetpassword" element={<Resetpassword />} />
+          <Route path="/wishlist" element={<Wishlist_data/>}/>
         </Routes>
       </BrowserRouter>
     </ShoppingCartProvider>

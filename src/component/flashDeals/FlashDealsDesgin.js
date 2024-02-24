@@ -3,7 +3,7 @@ import Card from "react-bootstrap/Card";
 import FormateCurrency from "./formateCurrency";
 import { Button } from "react-bootstrap";
 import { useShoppingCart } from "../context/shoppingCartContext";
-const FlashDeals = ({ meal }) => {
+const FlashDeals = ({  meal, handleAddToWishlist }) => {
   const {
     getItemQuantity,
     increaseCartQuantity,
@@ -11,7 +11,7 @@ const FlashDeals = ({ meal }) => {
     removeItemFromCart,
   } = useShoppingCart();
   const quantity = getItemQuantity(meal) || 0;
-
+  
   return (
     <Card className="h-100">
       <Card.Img
@@ -19,9 +19,23 @@ const FlashDeals = ({ meal }) => {
         variant="top"
         style={{ height: "250px", objectFit: "cover", position: "relative" }}
       />
-      <div style={{ position: "absolute", right: 0, color: "red" }}>
-        <i className="fa-regular fa-heart"></i>
-      </div>
+
+
+
+
+
+      
+      {/*<div  className="favourite" style={{  color: "red" }}>
+      <i
+        className={isItemInWishlist() ? "fa-solid fa-heart" : "fa-regular fa-heart"}
+        onClick={handleAddToWishlist} 
+      />
+  </div>*/}
+
+
+
+
+
       <Card.Body>
         <Card.Title className="mb-3 d-flex align-items-baseline justify-content-between">
           <span className="fs-4">{meal.title}</span>
