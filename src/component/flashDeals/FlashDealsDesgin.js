@@ -3,7 +3,8 @@ import Card from "react-bootstrap/Card";
 import FormateCurrency from "./formateCurrency";
 import { Button } from "react-bootstrap";
 import { useShoppingCart } from "../context/shoppingCartContext";
-const FlashDeals = ({ meal }) => {
+import { axios } from "axios";
+const FlashDealCard = ({ meal, onFavoriteClick }) => {
   const {
     getItemQuantity,
     increaseCartQuantity,
@@ -21,7 +22,12 @@ const FlashDeals = ({ meal }) => {
       />
 
       <div className="favourite" style={{ color: "red" }}>
-        <i className={meal.favourite ? "fa-solid fa-heart" : "fa-regular fa-heart"} />
+        <i
+          className={
+            meal.favourite ? "fa-solid fa-heart" : "fa-regular fa-heart"
+          }
+          onClick={() => onFavoriteClick(meal._id)}
+        />
       </div>
 
       <Card.Body>
@@ -67,4 +73,4 @@ const FlashDeals = ({ meal }) => {
   );
 };
 
-export default FlashDeals;
+export default FlashDealCard;

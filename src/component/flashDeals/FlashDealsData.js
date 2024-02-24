@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import FlashDeals from "./FlashDealsDesgin";
+import FlashDealCard from "./FlashDealsDesgin";
 import axios from "axios";
 import { Button } from "react-bootstrap";
 import { Modal, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AuthLocalUtils from "../../pages/local_utils";
 const FlashDealsData = () => {
   const [flashDealsData, setFlashDealsData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -32,6 +33,29 @@ const FlashDealsData = () => {
     fetchData();
   }, []);
 
+  const addToWishlist = async (itemId) => {
+    try {
+      const response = await axios.put(
+        `https://restaurant-project-drab.vercel.app/meal/redHeart/${itemId}`,
+        {},
+        {
+          headers: {
+            token: AuthLocalUtils.getToken(),
+          },
+        }
+      );
+      setFlashDealsData(
+        flashDealsData.map((meal) => {
+          if (meal._id === itemId) {
+            return response.data.data;
+          }
+          return meal;
+        })
+      );
+    } catch (error) {
+      console.error("Error add to Wishlist ", error);
+    }
+  };
   /* //POST
    const handelPostData =async()=>{
     setShowForm(true)
@@ -77,7 +101,7 @@ const FlashDealsData = () => {
   }
 
   const card = flashDealsData.map((meal) => (
-    <FlashDeals key={meal._id} meal={meal} />
+    <FlashDealCard key={meal._id} meal={meal} onFavoriteClick={addToWishlist} />
   ));
 
   return (
