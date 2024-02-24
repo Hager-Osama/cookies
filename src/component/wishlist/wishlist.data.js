@@ -1,7 +1,7 @@
 
 import axios from "axios";
 import {useEffect, useState } from "react"
-import Wishlist from "./wishlist.component";
+import WishlistItem from "./wishlist.component";
 import AuthLocalUtils from "../../pages/local_utils";
 const Wishlist_data = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
@@ -44,7 +44,7 @@ const Wishlist_data = () => {
   return (
     <>
       {wishlistItems.map((item) => (
-        <Wishlist key={item._id} item={item} addToWishlist={addToWishlist} wishlistItems={wishlistItems} />
+        <WishlistItem key={item._id} item={item} addToWishlist={addToWishlist} wishlistItems={wishlistItems} />
       ))}
     </>
   );

@@ -2,7 +2,7 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import FormateCurrency from "../../component/flashDeals/formateCurrency";
-const Wishlist = ({ item , addToWishlist ,wishlistItems}) => {
+const WishlistItem = ({ item , addToWishlist ,wishlistItems}) => {
   const isItemInWishlist = (itemId) => {
     return wishlistItems.some((item) => item._id === itemId);
 };
@@ -35,4 +35,4 @@ const handleAddToWishlist = () => {
     </Card>
   );
 };
-export default Wishlist;
+export default WishlistItem;
