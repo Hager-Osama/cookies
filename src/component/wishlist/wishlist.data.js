@@ -23,7 +23,9 @@ const WishlistData = () => {
     };
     getFavouriteItem();
   }, []);
-  //add or delete card to wishlist function
+
+  
+  //add card to wishlist function
   const addToWishlist = async (itemId) => {
     try {
       const response = await axios.put(

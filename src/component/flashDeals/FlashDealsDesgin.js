@@ -3,7 +3,7 @@ import Card from "react-bootstrap/Card";
 import FormateCurrency from "./formateCurrency";
 import { Button } from "react-bootstrap";
 import { useShoppingCart } from "../context/shoppingCartContext";
-import { axios } from "axios";
+
 const FlashDealCard = ({ meal, onFavoriteClick }) => {
   const {
     getItemQuantity,
