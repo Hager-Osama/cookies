@@ -8,6 +8,7 @@ const ShoppingCartContext = createContext({});
 const ShoppingCartProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  
   /*get */
   useEffect(() => {
     const fetchCartData = async () => {
