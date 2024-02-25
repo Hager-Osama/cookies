@@ -13,6 +13,7 @@ const NavBar = () => {
     const currentLocalUser = AuthLocalUtils.getLoginData();
     setUser(currentLocalUser);
   }, [null]);
+  
   return (
     <Navbar className="sticky-top shadow-sm  bg-white " expand="sm">
       <Container>

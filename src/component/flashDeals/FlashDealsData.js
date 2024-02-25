@@ -1,11 +1,8 @@
 import React, { useEffect, useState, useContext, createContext } from "react";
 import FlashDealCard from "./FlashDealsDesgin";
-import axios from "axios";
-import { Button } from "react-bootstrap";
-import { Modal, Form } from "react-bootstrap";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthLocalUtils from "../../pages/local_utils";
+import axiosInstance from "../../api/API";
 const MealContext = createContext({});
 
 const FlashDealsProvider = ({ children }) => {
@@ -27,13 +24,8 @@ const FlashDealsProvider = ({ children }) => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(
-        "https://restaurant-project-drab.vercel.app/meal/getallMeal",
-        {
-          headers: {
-            token: AuthLocalUtils.getToken(),
-          },
-        }
+      const response = await axiosInstance.get(
+        "https://restaurant-project-drab.vercel.app/meal/getallMeal"
       );
       setFlashDealsData(response.data.data);
     } catch (error) {
@@ -45,14 +37,8 @@ const FlashDealsProvider = ({ children }) => {
 
   const addToWishlist = async (itemId) => {
     try {
-      const response = await axios.put(
-        `https://restaurant-project-drab.vercel.app/meal/redHeart/${itemId}`,
-        {},
-        {
-          headers: {
-            token: AuthLocalUtils.getToken(),
-          },
-        }
+      const response = await axiosInstance.put(
+        `https://restaurant-project-drab.vercel.app/meal/redHeart/${itemId}`
       );
       setFlashDealsData(
         flashDealsData.map((meal) => {
