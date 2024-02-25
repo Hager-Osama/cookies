@@ -2,7 +2,7 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import FormateCurrency from "../../component/flashDeals/formateCurrency";
-const WishlistItem = ({ item, addToWishlist }) => {
+const WishlistItem = ({ item, addRemoveFromWishList }) => {
   return (
     <Card style={{ width: "18rem" }}>
       <Card.Img variant="top" src={item.image.url} />
@@ -16,7 +16,7 @@ const WishlistItem = ({ item, addToWishlist }) => {
         <div style={{ color: "red" }}>
           <i
             className={"fa-solid fa-heart"}
-            onClick={() => addToWishlist(item._id)}
+            onClick={() => addRemoveFromWishList(item._id)}
           />
         </div>
 

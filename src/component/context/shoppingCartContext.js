@@ -8,7 +8,7 @@ const ShoppingCartContext = createContext({});
 const ShoppingCartProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
-  
+
   /*get */
   useEffect(() => {
     const fetchCartData = async () => {
@@ -37,9 +37,7 @@ const ShoppingCartProvider = ({ children }) => {
   };
 
   const getItemQuantity = (meal) => {
-    return cartItems.length > 0
-      ? cartItems.find((item) => item.mealId._id === meal._id)?.quantity || 0
-      : 0;
+    return cartItems.length > 0 ? 1 : 0;
   };
 
   //add to cart function
@@ -82,7 +80,7 @@ const ShoppingCartProvider = ({ children }) => {
       await removeItemFromCart(meal);
       return;
     }
-    
+
     try {
       const response = await axios.patch(
         "https://restaurant-project-drab.vercel.app/cart",

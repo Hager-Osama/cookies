@@ -2,9 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import WishlistItem from "./wishlist.component";
 import AuthLocalUtils from "../../pages/local_utils";
+import { useFlashDealsProvider } from "../flashDeals/FlashDealsData";
 const WishlistData = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
-
+  const { fetchData } = useFlashDealsProvider();
   useEffect(() => {
     const getFavouriteItem = async () => {
       try {
@@ -17,6 +18,7 @@ const WishlistData = () => {
           }
         );
         setWishlistItems(response.data.data);
+        console.log("wishlistItems", response.data.data);
       } catch (error) {
         console.error("Error fetching Wishlist data:", error);
       }
@@ -24,9 +26,8 @@ const WishlistData = () => {
     getFavouriteItem();
   }, []);
 
-  
   //add card to wishlist function
-  const addToWishlist = async (itemId) => {
+  const addRemoveFromWishList = async (itemId) => {
     try {
       const response = await axios.put(
         `https://restaurant-project-drab.vercel.app/meal/redHeart/${itemId}`,
@@ -37,11 +38,19 @@ const WishlistData = () => {
           },
         }
       );
-      setWishlistItems(
-        wishlistItems.filter((meal) => {
-          return meal._id !== itemId;
-        })
-      );
+
+      if (response.data.data.favourite) {
+        setWishlistItems([...wishlistItems, response.data.data]);
+      } else {
+        const index = wishlistItems.findIndex(
+          (item) => item._id === response.data.data._id
+        );
+        if (index !== -1) {
+          wishlistItems.splice(index, 1);
+          setWishlistItems([...wishlistItems]);
+        }
+        fetchData();
+      }
     } catch (error) {
       console.error("Error add to Wishlist ", error);
     }
@@ -52,7 +61,7 @@ const WishlistData = () => {
         <WishlistItem
           key={`${item._id}+${index}`}
           item={item}
-          addToWishlist={addToWishlist}
+          addRemoveFromWishList={addRemoveFromWishList}
           wishlistItems={wishlistItems}
         />
       ))}
