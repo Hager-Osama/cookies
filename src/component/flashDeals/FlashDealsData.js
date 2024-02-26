@@ -10,7 +10,7 @@ const MealsList = () => {
 
   useEffect(() => {
     fetchData();
-  }, [flashDealsData]);
+  }, []);
 
   return (
     <div className="d-flex flex-wrap justify-content-evenly container mt-5  ">
@@ -49,17 +49,10 @@ const FlashDealsProvider = ({ children }) => {
 
   const addToWishlist = async (itemId) => {
     try {
-      const response = await axiosInstance.put(
+      await axiosInstance.put(
         `https://restaurant-project-drab.vercel.app/meal/redHeart/${itemId}`
       );
-      setFlashDealsData(
-        flashDealsData.map((meal) => {
-          if (meal._id === itemId) {
-            return response.data.data;
-          }
-          return meal;
-        })
-      );
+      fetchData();
     } catch (error) {
       console.error("Error add to Wishlist ", error);
     }
