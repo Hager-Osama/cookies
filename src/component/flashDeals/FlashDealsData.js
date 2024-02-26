@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext, createContext } from "react";
 import FlashDealCard from "./FlashDealsDesgin";
 import "react-toastify/dist/ReactToastify.css";
-import AuthLocalUtils from "../../pages/local_utils";
 import axiosInstance from "../../api/API";
 const MealContext = createContext({});
 
@@ -17,9 +16,6 @@ const FlashDealsProvider = ({ children }) => {
     offer: "",
     expired: "",
   });*/
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const fetchData = async () => {
     try {
@@ -33,8 +29,11 @@ const FlashDealsProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
-
+  };  
+  useEffect(() => {
+    fetchData();
+  }, []);
+  
   const addToWishlist = async (itemId) => {
     try {
       const response = await axiosInstance.put(
@@ -59,17 +58,15 @@ const FlashDealsProvider = ({ children }) => {
   return (
     <MealContext.Provider
       value={{
+        addToWishlist,
         fetchData,
       }}
     >
       {children}
-      {loading ? (
-        <p>loading</p>
-      ) : (
         <div className="d-flex flex-wrap justify-content-evenly container mt-5  ">
           {card}
         </div>
-      )}
+     
     </MealContext.Provider>
   );
 };

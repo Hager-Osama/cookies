@@ -3,26 +3,28 @@ import { useEffect, useState } from "react";
 import WishlistItem from "./wishlist.component";
 import AuthLocalUtils from "../../pages/local_utils";
 import { useFlashDealsProvider } from "../flashDeals/FlashDealsData";
+
 const WishlistData = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
   const { fetchData } = useFlashDealsProvider();
+  const getFavouriteItem = async () => {
+    try {
+      const response = await axios.get(
+        "https://restaurant-project-drab.vercel.app/meal/wishlist",
+        {
+          headers: {
+            token: AuthLocalUtils.getToken(),
+          },
+        }
+      );
+      setWishlistItems(response.data.data);
+      console.log("wishlistItems", response.data.data);
+    } catch (error) {
+      console.error("Error fetching Wishlist data:", error);
+    }
+  };
+  
   useEffect(() => {
-    const getFavouriteItem = async () => {
-      try {
-        const response = await axios.get(
-          "https://restaurant-project-drab.vercel.app/meal/wishlist",
-          {
-            headers: {
-              token: AuthLocalUtils.getToken(),
-            },
-          }
-        );
-        setWishlistItems(response.data.data);
-        console.log("wishlistItems", response.data.data);
-      } catch (error) {
-        console.error("Error fetching Wishlist data:", error);
-      }
-    };
     getFavouriteItem();
   }, []);
 
@@ -38,19 +40,8 @@ const WishlistData = () => {
           },
         }
       );
-
-      if (response.data.data.favourite) {
-        setWishlistItems([...wishlistItems, response.data.data]);
-      } else {
-        const index = wishlistItems.findIndex(
-          (item) => item._id === response.data.data._id
-        );
-        if (index !== -1) {
-          wishlistItems.splice(index, 1);
-          setWishlistItems([...wishlistItems]);
-        }
         fetchData();
-      }
+        getFavouriteItem();
     } catch (error) {
       console.error("Error add to Wishlist ", error);
     }
