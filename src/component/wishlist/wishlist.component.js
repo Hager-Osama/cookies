@@ -19,8 +19,8 @@ const WishlistItem = ({ item, addRemoveFromWishList }) => {
             onClick={() => addRemoveFromWishList(item._id)}
           />
         </div>
-
         <Button variant="primary">View Item</Button>
+      
       </Card.Body>
     </Card>
   );

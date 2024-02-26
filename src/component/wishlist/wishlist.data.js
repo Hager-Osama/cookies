@@ -46,6 +46,9 @@ const WishlistData = () => {
       console.error("Error add to Wishlist ", error);
     }
   };
+
+
+
   return (
     <div className="d-flex flex-wrap justify-content-evenly container mt-5 ">
       {wishlistItems.map((item, index) => (
