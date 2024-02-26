@@ -8,24 +8,24 @@ const ShoppingCartContext = createContext({});
 const ShoppingCartProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
-
-  /*get */
+  const isUserLoggedIn = AuthLocalUtils.isLoggedIn();
+  const fetchCartData = async () => {
+    try {
+      const response = await axios.get(
+        "https://restaurant-project-drab.vercel.app/cart",
+        {
+          headers: {
+            token: AuthLocalUtils.getToken(),
+          },
+        }
+      );
+      setCartItems(response.data.data.cart.meals);
+    } catch (error) {
+      console.error("Error fetching cart data:", error);
+    }
+  };
   useEffect(() => {
-    const fetchCartData = async () => {
-      try {
-        const response = await axios.get(
-          "https://restaurant-project-drab.vercel.app/cart",
-          {
-            headers: {
-              token: AuthLocalUtils.getToken(),
-            },
-          }
-        );
-        setCartItems(response.data.data.cart.meals);
-      } catch (error) {
-        console.error("Error fetching cart data:", error);
-      }
-    };
+    if (!isUserLoggedIn) return;
     fetchCartData();
   }, []);
 
@@ -37,7 +37,9 @@ const ShoppingCartProvider = ({ children }) => {
   };
 
   const getItemQuantity = (meal) => {
-    return cartItems.length > 0 ? 1 : 0;
+    return cartItems.length > 0
+      ? cartItems.find((item) => item.mealId._id === meal._id)?.quantity
+      : 0;
   };
 
   //add to cart function
@@ -125,6 +127,26 @@ const ShoppingCartProvider = ({ children }) => {
     }
   };
 
+  const clearCartFromMemory = () => {
+    setCartItems([]);
+  };
+  const clearCart = async () => {
+    try {
+      const response = await axios.patch(
+        "https://restaurant-project-drab.vercel.app/cart/clear",
+        {},
+        {
+          headers: {
+            token: AuthLocalUtils.getToken(),
+          },
+        }
+      );
+      setCartItems([]);
+    } catch (error) {
+      console.error("Error clearing cart:", error);
+    }
+  };
+
   const cartQuantity =
     cartItems.length > 0
       ? cartItems.reduce((quantity, item) => item.quantity + quantity, 0)
@@ -133,6 +155,7 @@ const ShoppingCartProvider = ({ children }) => {
   return (
     <ShoppingCartContext.Provider
       value={{
+        fetchCartData,
         cartItems,
         removeItemFromCart,
         decreaseCartQuantity,
@@ -141,6 +164,8 @@ const ShoppingCartProvider = ({ children }) => {
         closeCart,
         openCart,
         cartQuantity,
+        clearCart,
+        clearCartFromMemory,
       }}
     >
       {children}

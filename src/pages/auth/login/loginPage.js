@@ -8,15 +8,16 @@ import { toast } from "react-toastify";
 import "./style.css";
 import AuthLocalUtils from "../../local_utils";
 import axiosInstance from "../../../api/API";
+import { useShoppingCart } from "../../../component/context/shoppingCartContext";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const {fetchCartData} = useShoppingCart();
   useEffect(() => {
     // Check if there is a token in localStorage, if so, navigate to Home
     const token = localStorage.getItem("token");
@@ -38,6 +39,7 @@ const LoginPage = () => {
         if (success) {
           toast.success(" Login successfully!");
           AuthLocalUtils.saveLoginData(response.data.data);
+          fetchCartData();
           navigate("/");
         }
       } catch (error) {

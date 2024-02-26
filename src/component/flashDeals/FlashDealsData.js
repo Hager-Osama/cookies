@@ -4,18 +4,34 @@ import "react-toastify/dist/ReactToastify.css";
 import axiosInstance from "../../api/API";
 const MealContext = createContext({});
 
+const MealsList = () => {
+  const { isLoading, flashDealsData, fetchData, addToWishlist } =
+    useFlashDealsProvider();
+
+  useEffect(() => {
+    fetchData();
+  }, [flashDealsData]);
+
+  return (
+    <div className="d-flex flex-wrap justify-content-evenly container mt-5  ">
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        flashDealsData.map((meal) => (
+          <FlashDealCard
+            key={meal._id}
+            meal={meal}
+            onFavoriteClick={addToWishlist}
+          />
+        ))
+      )}
+    </div>
+  );
+};
+
 const FlashDealsProvider = ({ children }) => {
   const [flashDealsData, setFlashDealsData] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  /* const [loadingSubmit, setLoadingSubmit] = useState(false);
-  const [showForm, setShowForm] = useState(false);
-  const [formData, setFormData] = useState({
-    title: "",
-    meal: null,
-    offer: "",
-    expired: "",
-  });*/
 
   const fetchData = async () => {
     try {
@@ -29,11 +45,8 @@ const FlashDealsProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };  
-  useEffect(() => {
-    fetchData();
-  }, []);
-  
+  };
+
   const addToWishlist = async (itemId) => {
     try {
       const response = await axiosInstance.put(
@@ -52,21 +65,16 @@ const FlashDealsProvider = ({ children }) => {
     }
   };
 
-  const card = flashDealsData.map((meal) => (
-    <FlashDealCard key={meal._id} meal={meal} onFavoriteClick={addToWishlist} />
-  ));
   return (
     <MealContext.Provider
       value={{
+        loading,
+        flashDealsData,
         addToWishlist,
         fetchData,
       }}
     >
       {children}
-        <div className="d-flex flex-wrap justify-content-evenly container mt-5  ">
-          {card}
-        </div>
-     
     </MealContext.Provider>
   );
 };
@@ -74,3 +82,4 @@ export default FlashDealsProvider;
 export const useFlashDealsProvider = () => {
   return useContext(MealContext);
 };
+export { MealsList };

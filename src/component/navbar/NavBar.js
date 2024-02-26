@@ -5,15 +5,16 @@ import logo from "../../images/logo.png";
 import "./NavBar.css";
 import AuthLocalUtils from "../../pages/local_utils";
 import { useShoppingCart } from "../context/shoppingCartContext";
+import { useFlashDealsProvider } from "../flashDeals/FlashDealsData";
 const NavBar = () => {
-  const { openCart, cartQuantity } = useShoppingCart();
-
+  const { openCart, cartQuantity, clearCartFromMemory } = useShoppingCart();
+  const {fetchData} = useFlashDealsProvider();
   const [user, setUser] = useState(null);
   useEffect(() => {
     const currentLocalUser = AuthLocalUtils.getLoginData();
     setUser(currentLocalUser);
   }, [null]);
-  
+
   return (
     <Navbar className="sticky-top shadow-sm  bg-white " expand="sm">
       <Container>
@@ -105,6 +106,8 @@ const NavBar = () => {
             onClick={() => {
               AuthLocalUtils.deleteLoginData();
               setUser(null);
+              clearCartFromMemory();
+              fetchData();
             }}
           >
             logout

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import FormateCurrency from "./formateCurrency";
 import { Button } from "react-bootstrap";
 import { useShoppingCart } from "../context/shoppingCartContext";
-
+import AuthLocalUtils from "../../pages/local_utils";
+import { toast } from "react-toastify";
 const FlashDealCard = ({ meal, onFavoriteClick }) => {
   const {
     getItemQuantity,
@@ -11,8 +12,9 @@ const FlashDealCard = ({ meal, onFavoriteClick }) => {
     decreaseCartQuantity,
     removeItemFromCart,
   } = useShoppingCart();
+  const isUserLoggedIn = AuthLocalUtils.isLoggedIn();
   const quantity = getItemQuantity(meal) || 0;
-
+  const navigate = useNavigate();
   return (
     <Card className="h-100">
       <Card.Img
@@ -26,10 +28,16 @@ const FlashDealCard = ({ meal, onFavoriteClick }) => {
           className={
             meal.favourite ? "fa-solid fa-heart" : "fa-regular fa-heart"
           }
-          onClick={() => onFavoriteClick(meal._id)}
+          onClick={() => {
+            if (!isUserLoggedIn) {
+              toast.error("Please login to add item to wishlist");
+              navigate("/login");
+            } else {
+              onFavoriteClick(meal._id);
+            }
+          }}
         />
       </div>
-
       <Card.Body>
         <Card.Title className="mb-3 d-flex align-items-baseline justify-content-between">
           <span className="fs-4">{meal.title}</span>
@@ -41,7 +49,14 @@ const FlashDealCard = ({ meal, onFavoriteClick }) => {
           {quantity === 0 ? (
             <Button
               className="w-100"
-              onClick={() => increaseCartQuantity(meal)}
+              onClick={() => {
+                if (!isUserLoggedIn) {
+                  toast.error("Please login to add item to cart");
+                  navigate("/login");
+                } else {
+                  increaseCartQuantity(meal);
+                }
+              }}
             >
               Add To Cart
             </Button>

@@ -17,6 +17,10 @@ class AuthLocalUtils {
   static deleteLoginData() {
     localStorage.removeItem(loginKey);
   }
+
+  static isLoggedIn() {
+    return AuthLocalUtils.getToken()  !== undefined;
+  }
 }
 
 export default AuthLocalUtils;
