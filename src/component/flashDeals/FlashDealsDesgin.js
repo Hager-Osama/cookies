@@ -5,6 +5,7 @@ import { Button } from "react-bootstrap";
 import { useShoppingCart } from "../context/shoppingCartContext";
 import AuthLocalUtils from "../../pages/local_utils";
 import { toast } from "react-toastify";
+import { useFlashDealsProvider } from "../flashDeals/FlashDealsData";
 const FlashDealCard = ({ meal, onFavoriteClick }) => {
   const {
     getItemQuantity,
@@ -15,6 +16,7 @@ const FlashDealCard = ({ meal, onFavoriteClick }) => {
   const isUserLoggedIn = AuthLocalUtils.isLoggedIn();
   const quantity = getItemQuantity(meal) || 0;
   const navigate = useNavigate();
+  const {fetchData} = useFlashDealsProvider();
   return (
     <Card className="h-100">
       <Card.Img
@@ -30,6 +32,7 @@ const FlashDealCard = ({ meal, onFavoriteClick }) => {
           }
           onClick={() => {
             if (!isUserLoggedIn) {
+              fetchData();
               toast.error("Please login to add item to wishlist");
               navigate("/login");
             } else {
