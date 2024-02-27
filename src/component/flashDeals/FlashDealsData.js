@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext, createContext } from "react";
 import FlashDealCard from "./FlashDealsDesgin";
+import AuthLocalUtils from "../../pages/local_utils";
 import "react-toastify/dist/ReactToastify.css";
 import axiosInstance from "../../api/API";
 const MealContext = createContext({});
@@ -37,7 +38,13 @@ const FlashDealsProvider = ({ children }) => {
     try {
       setLoading(true);
       const response = await axiosInstance.get(
-        "https://restaurant-project-drab.vercel.app/meal/getallMeal"
+        "https://restaurant-project-drab.vercel.app/meal/getallMeal",
+        {},
+        {
+          headers: {
+            token: AuthLocalUtils.getToken(),
+          },
+        }
       );
       setFlashDealsData(response.data.data);
     } catch (error) {
