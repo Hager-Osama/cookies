@@ -22,11 +22,14 @@ const CartItem = ({ item }) => {
             </span>
           )}
         </div>
+
         <div className="text-muted" style={{ fontSize: "0.75rem" }}>
           {" "}
           {FormateCurrency(item.mealId.price)}
         </div>
+
       </div>
+      
       <div>{FormateCurrency(item.mealId.price * item.quantity)}</div>
       <Button
         variant="outline-danger"

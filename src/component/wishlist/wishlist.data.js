@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import WishlistItem from "./wishlist.component";
+import WishlistItem from "./wishlistcomponent";
 import AuthLocalUtils from "../../pages/local_utils";
 import { useFlashDealsProvider } from "../flashDeals/FlashDealsData";
 
@@ -23,7 +23,7 @@ const WishlistData = () => {
       console.error("Error fetching Wishlist data:", error);
     }
   };
-  
+
   useEffect(() => {
     getFavouriteItem();
   }, []);
@@ -40,14 +40,12 @@ const WishlistData = () => {
           },
         }
       );
-        fetchData();
-        getFavouriteItem();
+      fetchData();
+      getFavouriteItem();
     } catch (error) {
       console.error("Error add to Wishlist ", error);
     }
   };
-
-
 
   return (
     <div className="d-flex flex-wrap justify-content-evenly container mt-5 ">

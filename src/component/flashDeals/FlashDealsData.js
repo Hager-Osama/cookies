@@ -78,8 +78,8 @@ const FlashDealsProvider = ({ children }) => {
     </MealContext.Provider>
   );
 };
-export default FlashDealsProvider;
 export const useFlashDealsProvider = () => {
   return useContext(MealContext);
 };
+export default FlashDealsProvider;
 export { MealsList };

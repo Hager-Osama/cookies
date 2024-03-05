@@ -64,22 +64,18 @@ const NavBar = () => {
               <i className="fa-regular fa-heart"></i>
               Wishlist
             </Nav.Link>
-            <Button
-              variant="outline-warning"
+            <Nav.Link
+              href='/cart'
               className="rounded-circle d-flex mt-1 justify-content-center"
               style={{
                 color: "rgb(128 75 36)",
-                width: "5.25rem",
-                height: "2.60rem",
-
                 position: "relative",
                 margin: " auto",
                 top: "2px",
               }}
-              onClick={openCart}
-            >
+              >
               <i className="fa-solid fa-cart-shopping"></i>
-              cart
+              Cart
               <div
                 className="rounded-circle bg-success d-flex justify-content-center align-items-center;"
                 style={{
@@ -95,7 +91,8 @@ const NavBar = () => {
               >
                 {cartQuantity}
               </div>
-            </Button>
+            
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
         {user !== null ? (

@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import FormateCurrency from "../../component/flashDeals/formateCurrency";
+import FormateCurrency from "../flashDeals/formateCurrency";
 const WishlistItem = ({ item, addRemoveFromWishList }) => {
   return (
     <Card style={{ width: "18rem" }}>
@@ -20,7 +20,6 @@ const WishlistItem = ({ item, addRemoveFromWishList }) => {
           />
         </div>
         <Button variant="primary">View Item</Button>
-      
       </Card.Body>
     </Card>
   );
