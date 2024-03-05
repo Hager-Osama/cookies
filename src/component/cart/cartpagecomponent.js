@@ -15,12 +15,11 @@ const Cartpagecomponent = ({
         backgroundColor: "#e7d6c2",
       }}
     >
-    
-      <Container className="  ">
-        <Row>
+      <Container>
+        <Row className=" pt-3 ">
           <Col>
             <img
-              src={item.mealId.image?.url}
+              src={item.mealId.image.url}
               alt="cart-img"
               style={{ width: "125px", height: "75px", objectFit: "cover" }}
             />
@@ -29,9 +28,27 @@ const Cartpagecomponent = ({
             </div>
           </Col>
           <Col md="auto">
-            <Button onClick={() => decreaseCartQuantity(item.mealId)}>-</Button>
-            <span className="fs-4"> {item.quantity} </span>
-            <Button onClick={() => increaseCartQuantity(item.mealId)}>+</Button>
+            <button
+              style={{
+                outline: "none",
+                borderRadius: "50%",
+                border: "1px solid #804b24",
+              }}
+              onClick={() => decreaseCartQuantity(item.mealId)}
+            >
+              -
+            </button>
+            <span className="fs-5"> {item.quantity} </span>
+            <button
+              style={{
+                outline: "none",
+                borderRadius: "50%",
+                border: "1px solid #804b24",
+              }}
+              onClick={() => increaseCartQuantity(item.mealId)}
+            >
+              +
+            </button>
           </Col>
           <Col xs lg="2">
             <div>{FormateCurrency(item.mealId.price * item.quantity)}</div>

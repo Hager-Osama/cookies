@@ -64,6 +64,7 @@ const NavBar = () => {
               <i className="fa-regular fa-heart"></i>
               Wishlist
             </Nav.Link>
+
             <Nav.Link
               href='/cart'
               className="rounded-circle d-flex mt-1 justify-content-center"
@@ -93,9 +94,8 @@ const NavBar = () => {
               </div>
             
             </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-        {user !== null ? (
+
+             {user !== null ? (
           <Button
             variant="outline-success"
             className=" mx-2 mt-2"
@@ -110,6 +110,10 @@ const NavBar = () => {
             logout
           </Button>
         ) : null}
+          </Nav>
+         
+        </Navbar.Collapse>
+      
       </Container>
     </Navbar>
   );

@@ -35,12 +35,12 @@ const Cartpage = () => {
             </div>
           </Col>
 
-          <Col md="auto" className="text-muted">
-            <h3>Qty</h3>
+          <Col md="auto" className="text-muted mx-3">
+            <p>Qty</p>
           </Col>
 
           <Col xs lg="2" className="text-muted">
-            <h3>Total</h3>
+            <p>Total</p>
           </Col>
         </Row>
         </Container>
