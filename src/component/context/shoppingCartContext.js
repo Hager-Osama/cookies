@@ -8,6 +8,7 @@ const ShoppingCartContext = createContext({});
 const ShoppingCartProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const [cartQuantity, setCartQuantity] = useState(0);
   const isUserLoggedIn = AuthLocalUtils.isLoggedIn();
   const fetchCartData = async () => {
     try {
@@ -20,6 +21,7 @@ const ShoppingCartProvider = ({ children }) => {
         }
       );
       setCartItems(response.data.data.cart.meals);
+      computeCartQuantity(response.data.data.cart.meals);
     } catch (error) {
       console.error("Error fetching cart data:", error);
     }
@@ -67,7 +69,9 @@ const ShoppingCartProvider = ({ children }) => {
         } else {
           cartItems[index].quantity += quantity;
         }
-        setCartItems([...cartItems]);
+        const updatedCartItems = [...cartItems];
+        setCartItems(updatedCartItems);
+        computeCartQuantity(updatedCartItems);
       }
     } catch (error) {
       console.error("Error adding item to cart:", error);
@@ -103,6 +107,7 @@ const ShoppingCartProvider = ({ children }) => {
         return item;
       });
       setCartItems(updatedCartItems);
+      computeCartQuantity(updatedCartItems);
     } catch (error) {
       console.error("Error decreasing item quantity:", error);
     }
@@ -119,9 +124,11 @@ const ShoppingCartProvider = ({ children }) => {
           },
         }
       );
-      setCartItems([
+      const updatedCartItems = [
         ...cartItems.filter((item) => item.mealId._id !== meal._id),
-      ]);
+      ];
+      setCartItems(updatedCartItems);
+      computeCartQuantity(updatedCartItems);
     } catch (error) {
       console.error("Error removing item from cart:", error.data.message);
     }
@@ -129,6 +136,7 @@ const ShoppingCartProvider = ({ children }) => {
 
   const clearCartFromMemory = () => {
     setCartItems([]);
+    setCartQuantity(0);
   };
   const clearCart = async () => {
     try {
@@ -142,15 +150,19 @@ const ShoppingCartProvider = ({ children }) => {
         }
       );
       setCartItems([]);
+      setCartQuantity(0);
     } catch (error) {
       console.error("Error clearing cart:", error);
     }
   };
 
-  const cartQuantity =
-    cartItems.length > 0
-      ? cartItems.reduce((quantity, item) => item.quantity + quantity, 0)
-      : 0;
+  const computeCartQuantity = (cartItems) => {
+    let quantity = 0;
+    cartItems.forEach((item) => {
+      quantity += item.quantity;
+    });
+    setCartQuantity(quantity);
+  };
 
   return (
     <ShoppingCartContext.Provider
