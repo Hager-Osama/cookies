@@ -8,6 +8,8 @@ import ShoppingCartProvider from "./component/context/shoppingCartContext.js";
 import Wishlist_data from "./component/wishlist/wishlist.data.js";
 import FlashDealsProvider from "./component/flashDeals/FlashDealsData.js";
 import Cartpage from "./component/cart/cartpage.js";
+
+
 function App() {
   return (
     <ShoppingCartProvider>
