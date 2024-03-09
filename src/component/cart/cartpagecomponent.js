@@ -1,14 +1,14 @@
 import React from "react";
 
-import { Col, Container, Row, Button } from "react-bootstrap";
+import { Col, Container, Row,  } from "react-bootstrap";
 import FormateCurrency from "../flashDeals/formateCurrency";
 
 const Cartpagecomponent = ({
   item,
   decreaseCartQuantity,
   increaseCartQuantity,
-  cartQuantity,
 }) => {
+  
   return (
     <div
       style={{
@@ -16,41 +16,48 @@ const Cartpagecomponent = ({
       }}
     >
       <Container>
-        <Row className=" pt-3 ">
+        <Row className=" pt-3 pb-3 ">
           <Col>
             <img
               src={item.mealId.image.url}
               alt="cart-img"
-              style={{ width: "125px", height: "75px", objectFit: "cover" }}
+              style={{
+                width: "125px",
+                height: "75px",
+                objectFit: "cover",
+                borderRadius: "10px",
+              }}
             />
-            <div className="me-auto">
-              <div>{item.mealId.title}</div>
-            </div>
+            <span className="fs-5 px-2">{item.mealId.title}</span>
           </Col>
-          <Col md="auto">
+
+          <Col xs="auto">
             <button
               style={{
                 outline: "none",
-                borderRadius: "50%",
-                border: "1px solid #804b24",
+                borderRadius: "40%",
+                border: "1px solid #000",
+                fontWeight: "bold",
               }}
               onClick={() => decreaseCartQuantity(item.mealId)}
             >
               -
             </button>
-            <span className="fs-5"> {item.quantity} </span>
+            <span className="fs-6"> {item.quantity} </span>
             <button
               style={{
                 outline: "none",
-                borderRadius: "50%",
+                borderRadius: "40%",
                 border: "1px solid #804b24",
+                fontWeight: "bold",
               }}
               onClick={() => increaseCartQuantity(item.mealId)}
             >
               +
             </button>
           </Col>
-          <Col xs lg="2">
+
+          <Col  xs="2" >
             <div>{FormateCurrency(item.mealId.price * item.quantity)}</div>
           </Col>
         </Row>

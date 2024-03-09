@@ -1,8 +1,10 @@
-import React from "react";
-import Cartpagecomponent from './cartpagecomponent'
+import React, { useEffect, useState } from "react";
+import Cartpagecomponent from "./cartpagecomponent";
 import { useShoppingCart } from "../context/shoppingCartContext";
-import { Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import NavBar from "../navbar/NavBar";
+import FormateCurrency from "../flashDeals/formateCurrency";
+import { useNavigate } from "react-router-dom";
 const Cartpage = () => {
   const {
     cartQuantity,
@@ -10,11 +12,27 @@ const Cartpage = () => {
     increaseCartQuantity,
     decreaseCartQuantity,
   } = useShoppingCart();
+  const [totalPrice, setTotalPrice] = useState(0);
+  useEffect(() => {
+    const newTotalPrice = cartItems.reduce(
+      (sum, item) => sum + item.mealId.price * item.quantity,
+      0
+    );
+    setTotalPrice(newTotalPrice);
+  }, [cartItems]);
 
+  const navigate = useNavigate();
+
+  const handleAddItemsClick = () => {
+    navigate('/'); 
+  };
+  const handleCheckOutClick=()=>{
+    navigate('/checkout'); 
+  }
   return (
     <>
-        <NavBar />
-        <Container>
+      <NavBar />
+      <Container>
         <Row>
           <Col>
             <div className="d-flex ">
@@ -35,24 +53,40 @@ const Cartpage = () => {
             </div>
           </Col>
 
-          <Col md="auto" className="text-muted mx-3">
-            <p>Qty</p>
+          <Col xs="auto" className="text-muted mx-3">
+            <h6>Qty</h6>
           </Col>
 
-          <Col xs lg="2" className="text-muted">
-            <p>Total</p>
+          <Col xs="2" className="text-muted">
+            <h6>Total</h6>
           </Col>
         </Row>
-        </Container>
+      </Container>
       {cartItems.map((item) => (
         <Cartpagecomponent
           key={item.mealId._id}
           item={item}
           increaseCartQuantity={increaseCartQuantity}
           decreaseCartQuantity={decreaseCartQuantity}
-          cartQuantity={cartQuantity} 
+          cartQuantity={cartQuantity}
         />
-      ))}{" "}
+      ))}
+      <Container>
+        <Row className="mt-2">
+          <Col sm={8}>
+          <div className="d-flex justify-content-start gap-2  ">
+            <Button variant="outline-success" onClick={handleAddItemsClick}>+ ADD MORE ITEMS </Button>
+            <Button variant="success" onClick={handleCheckOutClick}> CHECKOUT </Button>
+          </div>
+          </Col>
+          <Col sm={4}> 
+            <div className="d-flex justify-content-end gap-2" style={{fontWeight:"bold"}}>
+              <p>Total Price</p>
+              <p style={{ color: " #F75C0B" }}>{FormateCurrency(totalPrice)}</p>
+            </div>
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 };

@@ -14,11 +14,11 @@ import SecondFooter from "../component/Footer/SecondFooter";
 import { MealsList } from "../component/flashDeals/FlashDealsData";
 import { useShoppingCart } from "../component/context/shoppingCartContext";
 const HomePage = () => {
-  const { openCart, cartQuantity, clearCartFromMemory } = useShoppingCart();
+  const { openCart, cartQuantity } = useShoppingCart();
   return (
     <div>
-      <button class="float-btn" onClick={openCart}>
-        <i class="fa-solid fa-bag-shopping"></i>
+      <button className="float-btn" onClick={openCart}>
+        <i className="fa-solid fa-bag-shopping"></i>
         <div
                 className="rounded-circle bg-success d-flex justify-content-center align-items-center;"
                 style={{
