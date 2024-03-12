@@ -8,7 +8,7 @@ import ShoppingCartProvider from "./component/context/shoppingCartContext.js";
 import Wishlist_data from "./component/wishlist/wishlist.data.js";
 import FlashDealsProvider from "./component/flashDeals/FlashDealsData.js";
 import Cartpage from "./component/cart/cartpage.js";
-
+import CheckoutPage from "./component/checkout/checkoutPage.js";
 
 function App() {
   return (
@@ -23,6 +23,7 @@ function App() {
             <Route path="/resetpassword" element={<Resetpassword />} />
             <Route path="/wishlist" element={<Wishlist_data />} />
             <Route path="/cart" element={<Cartpage />} />
+            <Route path="/cart/checkout" element={<CheckoutPage />} />
           </Routes>
         </BrowserRouter>
       </FlashDealsProvider>

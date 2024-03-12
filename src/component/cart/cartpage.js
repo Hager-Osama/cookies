@@ -4,7 +4,7 @@ import { useShoppingCart } from "../context/shoppingCartContext";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import NavBar from "../navbar/NavBar";
 import FormateCurrency from "../flashDeals/formateCurrency";
-import { useNavigate } from "react-router-dom";
+import { useNavigate ,Outlet} from "react-router-dom";
 const Cartpage = () => {
   const {
     cartQuantity,
@@ -24,11 +24,11 @@ const Cartpage = () => {
   const navigate = useNavigate();
 
   const handleAddItemsClick = () => {
-    navigate('/'); 
+    navigate("/");
   };
-  const handleCheckOutClick=()=>{
-    navigate('/checkout'); 
-  }
+  const handleCheckOutClick = () => {
+    navigate("checkout");
+  };
   return (
     <>
       <NavBar />
@@ -74,19 +74,28 @@ const Cartpage = () => {
       <Container>
         <Row className="mt-2">
           <Col sm={8}>
-          <div className="d-flex justify-content-start gap-2  ">
-            <Button variant="outline-success" onClick={handleAddItemsClick}>+ ADD MORE ITEMS </Button>
-            <Button variant="success" onClick={handleCheckOutClick}> CHECKOUT </Button>
-          </div>
+            <div className="d-flex justify-content-start gap-2  ">
+              <Button variant="outline-success" onClick={handleAddItemsClick}>
+                + ADD MORE ITEMS{" "}
+              </Button>
+              <Button variant="success" onClick={handleCheckOutClick}>
+                {" "}
+                CHECKOUT{" "}
+              </Button>
+            </div>
           </Col>
-          <Col sm={4}> 
-            <div className="d-flex justify-content-end gap-2" style={{fontWeight:"bold"}}>
+          <Col sm={4}>
+            <div
+              className="d-flex justify-content-end gap-2"
+              style={{ fontWeight: "bold" }}
+            >
               <p>Total Price</p>
               <p style={{ color: " #F75C0B" }}>{FormateCurrency(totalPrice)}</p>
             </div>
           </Col>
         </Row>
       </Container>
+      <Outlet />
     </>
   );
 };
