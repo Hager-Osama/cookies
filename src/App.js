@@ -8,7 +8,7 @@ import ShoppingCartProvider from "./component/context/shoppingCartContext.js";
 import Wishlist_data from "./component/wishlist/wishlist.data.js";
 import FlashDealsProvider from "./component/flashDeals/FlashDealsData.js";
 import Cartpage from "./component/cart/cartpage.js";
-import CheckoutPage from "./component/checkout/checkoutPage.js";
+import CheckoutPage from "./pages/checkout/checkoutPage.js";
 
 function App() {
   return (

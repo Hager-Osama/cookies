@@ -1,0 +1,45 @@
+.checkout-form {
+  margin: 0 auto;
+  width: 70%;
+  padding: 20px;
+  border-radius: 5px;
+  margin-top: 5%;
+  box-shadow: 0px 6px 20px -5px #62523da3;  background-color: #fbf3e8;
+}
+input[type="radio"] {
+  border: 1px solid #ccc;
+}
+input[type="radio"]:checked ~ label {
+  color: #c5750d;
+  font-weight: bold;
+}
+form h5 {
+  color: #997c58;
+  text-align: center;
+}
+form p {
+  font-size: 12px;
+}
+.checkout-header {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.checkout-payment {
+  margin-top: 10%;
+}
+.checkout-payment .box {
+  padding: 10px;
+  border: 1px solid #c5750d;
+  margin: 15px 0px;
+  border-radius: 10px;
+  background-color: #fbf3e8;
+}
+.checkout-payment span {
+  font-size: 12px;
+}
+@media (min-width: 280px) and (max-width: 1199.98px) {
+  form {
+    width: 100%;
+  }
+}

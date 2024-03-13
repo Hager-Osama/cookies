@@ -1,6 +1,0 @@
-input[type="radio"] {
-    border: 1px solid #ccc; /* Change these values for desired border */
-  }
-  input[type="radio"]:checked ~ label {
-    color: brown;
-  }
