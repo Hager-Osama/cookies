@@ -84,7 +84,7 @@ const Forgotpassword = () => {
                   <Form.Control
                     autoComplete="off"
                     pattern="[^@\s]+@[^@\s]+\.[a-zA-Z]{2,}"
-                    type="email"
+                    type="email" 
                     placeholder="Enter email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}

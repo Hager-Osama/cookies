@@ -21,7 +21,7 @@ const CheckoutPage = () => {
           <Row className="mb-3">
             <Form.Group as={Col}>
               <Form.Label>Phone number</Form.Label>
-              <Form.Control type="tel" name="phone" />
+              <Form.Control type="tel" name="phone" required />
             </Form.Group>
             <Form.Group as={Col}>
               <Form.Label>Second Phone no. (optional)</Form.Label>
@@ -30,12 +30,12 @@ const CheckoutPage = () => {
           </Row>
           <Row className="mb-3">
             <Form.Group as={Col}>
-              <Form.Label>Full name</Form.Label>
-              <Form.Control type="text" name="name" />
+              <Form.Label>Full name</Form.Label> 
+              <Form.Control type="text" name="name" required/>
             </Form.Group>
             <Form.Group as={Col}>
               <Form.Label>E-mail</Form.Label>
-              <Form.Control type="email" name="email" />
+              <Form.Control type="email" name="email" pattern="[^@\s]+@[^@\s]+\.[a-zA-Z]{2,}" required />
             </Form.Group>
           </Row>
           {isPickupSelected ? null : ( // Hide when pickup is selected
@@ -53,7 +53,7 @@ const CheckoutPage = () => {
                 </Form.Group>
               </Row><Form.Group>
                 <Form.Label>Building name/number</Form.Label>
-                <Form.Control type="text" name="building" />
+                <Form.Control type="text" name="building"  />
               </Form.Group><Row className="mb-3">
                 <Form.Group as={Col}>
                   <Form.Label>Floor</Form.Label>
